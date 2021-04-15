@@ -64,7 +64,10 @@ export default ProgressIndicator = () => {
         </View>
         <View style={styles.barContainer}>
           <LinearGradient
-            colors={["#007AFF", "#65AEFF"]}
+            colors={[
+              colors[colorScheme].gradients.blue.start,
+              colors[colorScheme].gradients.blue.end,
+            ]}
             style={[styles.bar, { width: "80%" }]}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}
@@ -78,7 +81,10 @@ export default ProgressIndicator = () => {
         </View>
         <View style={styles.barContainer}>
           <LinearGradient
-            colors={["#4CD964", "#56F270"]}
+            colors={[
+              colors[colorScheme].gradients.green.start,
+              colors[colorScheme].gradients.green.end,
+            ]}
             style={[styles.bar, { width: "50%" }]}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}
@@ -92,7 +98,10 @@ export default ProgressIndicator = () => {
         </View>
         <View style={styles.barContainer}>
           <LinearGradient
-            colors={["#FF3B30", "#E87A73"]}
+            colors={[
+              colors[colorScheme].gradients.red.start,
+              colors[colorScheme].gradients.red.end,
+            ]}
             style={[styles.bar, { width: "70%" }]}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}
