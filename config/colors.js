@@ -9,6 +9,28 @@ export default {
       primary: "rgb(255, 255, 255)",
       secondary: "rgb(200,200,200)",
     },
+    gradients: {
+      green: {
+        start: "#4CD964",
+        end: "#56F270",
+      },
+      blue: {
+        start: "#007AFF",
+        end: "#65AEFF",
+      },
+      yellow: {
+        start: "#FFCC00",
+        end: "#FFE787",
+      },
+      red: {
+        start: "#FF3B30",
+        end: "#E87A73",
+      },
+      orange: {
+        start: "#FF9500",
+        end: "#FFB956",
+      },
+    },
     separator: "rgb(100,100,100)",
   },
   light: {
@@ -20,6 +42,12 @@ export default {
     fonts: {
       primary: "rgb(0,0,0)",
       secondary: "rgb(100,100,100)",
+    },
+    gradients: {
+      green: {
+        start: "rgb()",
+        end: "",
+      },
     },
     separator: "rgb(200,200,200)",
   },
