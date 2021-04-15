@@ -69,6 +69,7 @@ export default Properties = () => {
     sell: {
       fontSize: 18,
       fontWeight: "700",
+      color: colors.dark.fonts.primary,
     },
     sellBtn: {
       position: "absolute",
@@ -168,12 +169,15 @@ export default Properties = () => {
               </View>
               <TouchableOpacity style={styles.sellBtn}>
                 <LinearGradient
-                  colors={["#4CD964", "#56F270"]}
+                  colors={[
+                    colors[colorScheme].gradients.green.start,
+                    colors[colorScheme].gradients.green.end,
+                  ]}
                   start={{ x: 0, y: 0 }}
                   end={{ x: 1, y: 1 }}
                   style={styles.btnGradient}
                 >
-                  <Text style={[styles.sell, styles.text]}>Sell</Text>
+                  <Text style={styles.sell}>Sell</Text>
                 </LinearGradient>
               </TouchableOpacity>
             </View>
