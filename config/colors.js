@@ -45,8 +45,24 @@ export default {
     },
     gradients: {
       green: {
-        start: "rgb()",
-        end: "",
+        start: "#4CD964",
+        end: "#56F270",
+      },
+      blue: {
+        start: "#007AFF",
+        end: "#65AEFF",
+      },
+      yellow: {
+        start: "#FFCC00",
+        end: "#FFE787",
+      },
+      red: {
+        start: "#FF3B30",
+        end: "#E87A73",
+      },
+      orange: {
+        start: "#FF9500",
+        end: "#FFB956",
       },
     },
     separator: "rgb(200,200,200)",
