@@ -47,6 +47,20 @@ export default Properties = () => {
     propertyTitle: {
       fontSize: 18,
       fontWeight: "600",
+      marginBottom: 10,
+    },
+    separator: {
+      width: "100%",
+      height: 1,
+      shadowColor: colors[colorScheme].boxShadow,
+      shadowRadius: 4,
+      shadowOffset: {
+        width: 0,
+        height: 3,
+      },
+      shadowOpacity: 0.16,
+      backgroundColor: colors[colorScheme].separator,
+      marginVertical: 10,
     },
     text: {
       color: colors[colorScheme].fonts.primary,
@@ -73,14 +87,17 @@ export default Properties = () => {
         </TouchableOpacity>
         <View style={styles.containerContent}>
           <ScrollView style={{ width: "100%", height: "100%" }}>
-            <Text style={[styles.text, styles.propertyTitle]}>Properties</Text>
+            <Text style={[styles.text, styles.propertyTitle]}>
+              Beach Mansion
+            </Text>
             <Image
               style={styles.img}
               source={{
                 uri:
-                  "https://raw.githubusercontent.com/ulisesaviles/invest-n-grow/master/assets/img/rich%20house.png?token=APJBUS2LICD3RNUQU5YNYEDAO7EJE",
+                  "https://raw.githubusercontent.com/ulisesaviles/invest-n-grow/master/assets/img/rich%20house.png",
               }}
             />
+            <View style={styles.separator} />
           </ScrollView>
         </View>
         <TouchableOpacity>

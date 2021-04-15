@@ -8,6 +8,7 @@ export default {
     fonts: {
       primary: "rgb(255, 255, 255)",
     },
+    separator: "rgb(100,100,100)",
   },
   light: {
     arrow: "rgb(50,50,50)",
@@ -18,5 +19,6 @@ export default {
     fonts: {
       primary: "rgb(0,0,0)",
     },
+    separator: "rgb(200,200,200)",
   },
 };
