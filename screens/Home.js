@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View, SafeAreaView } from "react-native";
+import { StyleSheet, Text, View, SafeAreaView, Dimensions } from "react-native";
 import { useColorScheme } from "react-native-appearance";
 import colors from "../config/colors";
 import { ProgressIndicator, Properties } from "../components";
@@ -15,6 +15,16 @@ export default Home = () => {
       // justifyContent: "center",
       backgroundColor: colors[colorScheme].background,
     },
+    progressIndicator: {
+      position: "relative",
+      width: "100%",
+    },
+    properties: {
+      position: "absolute",
+      top: 0,
+      width: "100%",
+      marginTop: Dimensions.get("screen").height * 0.25,
+    },
     text: {
       color: colors[colorScheme].fonts.primary,
     },
@@ -22,8 +32,12 @@ export default Home = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ProgressIndicator />
-      <Properties />
+      <View style={styles.progressIndicator}>
+        <ProgressIndicator />
+      </View>
+      <View style={styles.properties}>
+        <Properties />
+      </View>
     </SafeAreaView>
   );
 };
