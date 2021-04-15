@@ -11,15 +11,23 @@ import {
 import { useColorScheme } from "react-native-appearance";
 
 import colors from "../config/colors";
+
 import { Entypo } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient";
 
 export default Properties = () => {
   let colorScheme = useColorScheme();
 
   const styles = StyleSheet.create({
+    btnGradient: {
+      borderRadius: 10,
+      height: 30,
+      justifyContent: "center",
+      alignItems: "center",
+    },
     container: {
-      // backgroundColor: colors[colorScheme].containers,
-      height: "45%",
+      //height: "45%",
+      height: Dimensions.get("screen").height * 0.43,
     },
     containerContent: {
       width: "70%",
@@ -39,6 +47,15 @@ export default Properties = () => {
       flexDirection: "row",
       alignItems: "center",
     },
+    containerSection2: {
+      flexDirection: "row",
+      alignItems: "center",
+      width: "100%",
+    },
+    content: {
+      color: colors[colorScheme].fonts.secondary,
+      // fontSize: 16,
+    },
     img: {
       width: "100%",
       height: (Dimensions.get("screen").width * 0.7 - 40) * 0.8,
@@ -48,6 +65,22 @@ export default Properties = () => {
       fontSize: 18,
       fontWeight: "600",
       marginBottom: 10,
+    },
+    sell: {
+      fontSize: 18,
+      fontWeight: "700",
+    },
+    sellBtn: {
+      position: "absolute",
+      right: 0,
+      width: "30%",
+      shadowColor: colors[colorScheme].boxShadow,
+      shadowRadius: 4,
+      shadowOffset: {
+        width: 0,
+        height: 3,
+      },
+      shadowOpacity: 0.16,
     },
     separator: {
       width: "100%",
@@ -62,10 +95,22 @@ export default Properties = () => {
       backgroundColor: colors[colorScheme].separator,
       marginVertical: 10,
     },
+    subtitle: {
+      fontWeight: "600",
+      marginRight: 5,
+      // fontSize: 16,
+    },
     text: {
       color: colors[colorScheme].fonts.primary,
       textAlign: "center",
       margin: 0,
+    },
+    textContainer: {
+      width: "60%",
+    },
+    textRow: {
+      flexDirection: "row",
+      marginBottom: 5,
     },
     title: {
       fontSize: 25,
@@ -98,6 +143,40 @@ export default Properties = () => {
               }}
             />
             <View style={styles.separator} />
+            <View style={styles.containerSection2}>
+              <View style={styles.textContainer}>
+                <View style={styles.textRow}>
+                  <Text style={[styles.text, styles.subtitle]}>You paid:</Text>
+                  <Text style={[styles.text, styles.content]}>$1.8M</Text>
+                </View>
+                <View style={styles.textRow}>
+                  <Text style={[styles.text, styles.subtitle]}>
+                    Current value:
+                  </Text>
+                  <Text style={[styles.text, styles.content]}>$1.6M</Text>
+                </View>
+                <View style={styles.textRow}>
+                  <Text style={[styles.text, styles.subtitle]}>
+                    Life quality:
+                  </Text>
+                  <Text style={[styles.text, styles.content]}>+20pts</Text>
+                </View>
+                <View style={styles.textRow}>
+                  <Text style={[styles.text, styles.subtitle]}>Cash flow:</Text>
+                  <Text style={[styles.text, styles.content]}>-$2k</Text>
+                </View>
+              </View>
+              <TouchableOpacity style={styles.sellBtn}>
+                <LinearGradient
+                  colors={["#4CD964", "#56F270"]}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 1 }}
+                  style={styles.btnGradient}
+                >
+                  <Text style={[styles.sell, styles.text]}>Sell</Text>
+                </LinearGradient>
+              </TouchableOpacity>
+            </View>
           </ScrollView>
         </View>
         <TouchableOpacity>

@@ -7,6 +7,7 @@ export default {
     containers: "rgb(35, 35, 35)",
     fonts: {
       primary: "rgb(255, 255, 255)",
+      secondary: "rgb(200,200,200)",
     },
     separator: "rgb(100,100,100)",
   },
@@ -18,6 +19,7 @@ export default {
     containers: "rgb(255, 255, 255)",
     fonts: {
       primary: "rgb(0,0,0)",
+      secondary: "rgb(100,100,100)",
     },
     separator: "rgb(200,200,200)",
   },
