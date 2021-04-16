@@ -12,12 +12,18 @@ import { useColorScheme } from "react-native-appearance";
 import { LinearGradient } from "expo-linear-gradient";
 
 import colors from "../config/colors";
-import { ProgressIndicator, Properties } from "../components";
+import { ProgressIndicator, Properties, Assets } from "../components";
 
 export default Home = () => {
   let colorScheme = useColorScheme();
 
   const styles = StyleSheet.create({
+    assetsContainer: {
+      position: "absolute",
+      bottom: 25,
+      width: "100%",
+      alignItems: "center",
+    },
     btnsContainer: {
       width: "100%",
       flexDirection: "row",
@@ -55,7 +61,7 @@ export default Home = () => {
     storeBtn: {
       position: "absolute",
       right: Dimensions.get("screen").width * 0.025,
-      top: 60,
+      top: 50,
       width: "30%",
       shadowColor: colors[colorScheme].boxShadow,
       shadowRadius: 4,
@@ -68,7 +74,7 @@ export default Home = () => {
     sucesosBtn: {
       position: "absolute",
       left: Dimensions.get("screen").width * 0.025,
-      top: 60,
+      top: 50,
       width: "30%",
       shadowColor: colors[colorScheme].boxShadow,
       shadowRadius: 4,
@@ -118,6 +124,9 @@ export default Home = () => {
             </LinearGradient>
           </TouchableOpacity>
         </View>
+      </View>
+      <View style={styles.assetsContainer}>
+        <Assets />
       </View>
     </SafeAreaView>
   );
