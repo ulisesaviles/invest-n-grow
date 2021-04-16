@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import {
   StyleSheet,
   Text,
@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Image,
   Dimensions,
+  Animated,
 } from "react-native";
 import { useColorScheme } from "react-native-appearance";
 
@@ -17,6 +18,38 @@ import { LinearGradient } from "expo-linear-gradient";
 
 export default Properties = () => {
   let colorScheme = useColorScheme();
+
+  const [hideProperty, setHideProperty] = useState(false);
+
+  const animatedValues = {
+    propertyPosition: useRef(new Animated.Value(0)).current,
+  };
+
+  const translateProperty = (direction, duration) => {
+    Animated.timing(animatedValues.propertyPosition, {
+      toValue:
+        direction == "center"
+          ? 0
+          : direction == "left"
+          ? -1 * Dimensions.get("screen").width
+          : Dimensions.get("screen").width,
+      duration: duration,
+      useNativeDriver: false,
+    }).start();
+  };
+
+  const propertyNav = (direction) => {
+    translateProperty(direction == "left" ? "right" : "left", 100);
+    setTimeout(() => {
+      setHideProperty(true);
+      // Change the property
+      translateProperty(direction, 0);
+    }, 100);
+    setTimeout(() => {
+      setHideProperty(false);
+      translateProperty("center", 100);
+    }, 150);
+  };
 
   const styles = StyleSheet.create({
     btnGradient: {
@@ -42,6 +75,9 @@ export default Properties = () => {
       shadowOpacity: 0.16,
       backgroundColor: colors[colorScheme].containers,
       padding: 20,
+      opacity: hideProperty ? 0 : 1,
+      transform: [{ translateX: animatedValues.propertyPosition }],
+      // transform: [{ translateX: 0 }],
     },
     containerHorizontal: {
       flexDirection: "row",
@@ -54,7 +90,6 @@ export default Properties = () => {
     },
     content: {
       color: colors[colorScheme].fonts.secondary,
-      // fontSize: 16,
     },
     img: {
       width: "100%",
@@ -99,7 +134,6 @@ export default Properties = () => {
     subtitle: {
       fontWeight: "600",
       marginRight: 5,
-      // fontSize: 16,
     },
     text: {
       color: colors[colorScheme].fonts.primary,
@@ -124,14 +158,18 @@ export default Properties = () => {
     <View style={styles.container}>
       <Text style={[styles.text, styles.title]}>Properties</Text>
       <View style={styles.containerHorizontal}>
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            propertyNav("left");
+          }}
+        >
           <Entypo
             name="chevron-small-left"
             size={60}
             color={colors[colorScheme].arrow}
           />
         </TouchableOpacity>
-        <View style={styles.containerContent}>
+        <Animated.View style={styles.containerContent}>
           <ScrollView style={{ width: "100%", height: "100%" }}>
             <Text style={[styles.text, styles.propertyTitle]}>
               Beach Mansion
@@ -182,8 +220,12 @@ export default Properties = () => {
               </TouchableOpacity>
             </View>
           </ScrollView>
-        </View>
-        <TouchableOpacity>
+        </Animated.View>
+        <TouchableOpacity
+          onPress={() => {
+            propertyNav("right");
+          }}
+        >
           <Entypo
             name="chevron-small-right"
             size={60}
