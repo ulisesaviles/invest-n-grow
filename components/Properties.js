@@ -12,12 +12,15 @@ import {
 import { useColorScheme } from "react-native-appearance";
 
 import colors from "../config/colors";
+import richHouse from "../assets/img/richHouse.png";
+import poorHouse from "../assets/img/poorHouse.png";
 
 import { Entypo } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 
 export default Properties = () => {
   let colorScheme = useColorScheme();
+  const [property, setProperty] = useState(richHouse);
 
   const [hideProperty, setHideProperty] = useState(false);
 
@@ -39,16 +42,15 @@ export default Properties = () => {
   };
 
   const propertyNav = (direction) => {
-    translateProperty(direction == "left" ? "right" : "left", 100);
+    translateProperty(direction == "left" ? "right" : "left", 200);
+    // Change the property
     setTimeout(() => {
       setHideProperty(true);
-      // Change the property
+      property == richHouse ? setProperty(poorHouse) : setProperty(richHouse);
       translateProperty(direction, 0);
-    }, 100);
-    setTimeout(() => {
       setHideProperty(false);
-      translateProperty("center", 100);
-    }, 150);
+      translateProperty("center", 200);
+    }, 200);
   };
 
   const styles = StyleSheet.create({
@@ -176,10 +178,11 @@ export default Properties = () => {
             </Text>
             <Image
               style={styles.img}
-              source={{
-                uri:
-                  "https://raw.githubusercontent.com/ulisesaviles/invest-n-grow/master/assets/img/rich%20house.png",
-              }}
+              // source={{
+              //   uri:
+              //     "https://raw.githubusercontent.com/ulisesaviles/invest-n-grow/master/assets/img/rich%20house.png",
+              // }}
+              source={property}
             />
             <View style={styles.separator} />
             <View style={styles.containerSection2}>
