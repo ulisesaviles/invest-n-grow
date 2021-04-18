@@ -176,14 +176,7 @@ export default Properties = () => {
             <Text style={[styles.text, styles.propertyTitle]}>
               Beach Mansion
             </Text>
-            <Image
-              style={styles.img}
-              // source={{
-              //   uri:
-              //     "https://raw.githubusercontent.com/ulisesaviles/invest-n-grow/master/assets/img/rich%20house.png",
-              // }}
-              source={property}
-            />
+            <Image style={styles.img} source={property} />
             <View style={styles.separator} />
             <View style={styles.containerSection2}>
               <View style={styles.textContainer}>
