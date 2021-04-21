@@ -16,6 +16,7 @@ A financial education game
 
 [Click here](https://youtu.be/uAHGMttronY) to see a youtube video that shows the current state of the project.
 
-### Screenshot of the home screen:
+#### Screenshot of the home screen: ####
+![](https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png | width=100)
+https://raw.githubusercontent.com/ulisesaviles/invest-n-grow/master/assets/avances/avance.jpeg
 
-![Home](https://raw.githubusercontent.com/ulisesaviles/invest-n-grow/master/assets/avances/avance.jpeg | width=100)
