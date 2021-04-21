@@ -14,8 +14,8 @@ A financial education game
 
 ## How does it looks?
 
-![Click here](https://www.youtube.com “Youtube”) to see a youtube video that shows the current state of the project.
+[Click here](https://www.youtube.com “Youtube”) to see a youtube video that shows the current state of the project.
 
 ### Screenshot of the home screen:
 
-![Home](https://raw.githubusercontent.com/ulisesaviles/invest-n-grow/master/assets/avances/avance.jpeg)
+![Home](https://raw.githubusercontent.com/ulisesaviles/invest-n-grow/master/assets/avances/avance.jpeg =250x)
