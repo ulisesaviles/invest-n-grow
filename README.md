@@ -5,7 +5,7 @@ A financial education game
 1. Download the app 'Expo client' on our phone to be able to run it.
 2. Clone this repo locally.
 3. Open the terminal and run the following command: 
-  >`yarn`
+  `yarn`
 4. Then, run this other command:
-  >`yarn start`
+  `yarn start`
 5. Scan the QR code with your physical device and it will run!
