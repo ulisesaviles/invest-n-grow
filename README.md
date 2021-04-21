@@ -14,7 +14,7 @@ A financial education game
 
 ## How does it looks?
 
-[Click here] (https://www.youtube.com “Youtube”) to see a youtube video that shows the current state of the project.
+![Click here] (https://www.youtube.com “Youtube”) to see a youtube video that shows the current state of the project.
 
 ### Screenshot of the home screen:
 
