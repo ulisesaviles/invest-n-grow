@@ -18,4 +18,4 @@ A financial education game
 
 ### Screenshot of the home screen:
 
-![Home](https://raw.githubusercontent.com/ulisesaviles/invest-n-grow/master/assets/avances/avance.jpeg =250x)
+![Home](https://raw.githubusercontent.com/ulisesaviles/invest-n-grow/master/assets/avances/avance.jpeg | width=100)
