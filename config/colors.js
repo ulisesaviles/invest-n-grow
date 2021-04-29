@@ -5,6 +5,7 @@ export default {
     barBackground: "rgb(50, 50, 50)",
     boxShadow: "rgba(0,0,0,0.8)",
     containers: "rgb(35, 35, 35)",
+    subContainers: "rgb(40,40,40)",
     containersUnselected: "rgb(20,20,20)",
     fonts: {
       primary: "rgb(255, 255, 255)",
@@ -40,6 +41,7 @@ export default {
     barBackground: "rgb(240, 240, 240)",
     boxShadow: "rgba(0,0,0,0.8)",
     containers: "rgb(255, 255, 255)",
+    subContainers: "rgb(250,250,250)",
     containersUnselected: "rgb(220,220,220)",
     fonts: {
       primary: "rgb(0,0,0)",

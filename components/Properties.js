@@ -61,7 +61,6 @@ export default Properties = () => {
       alignItems: "center",
     },
     container: {
-      //height: "45%",
       height: Dimensions.get("screen").height * 0.43,
     },
     containerContent: {
