@@ -16,10 +16,11 @@ import { useColorScheme } from "react-native-appearance";
 // imports from expo
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
+import { Entypo } from "@expo/vector-icons";
 
 // Local imports
 import colors from "../config/colors";
-import { Properties } from "../components";
+import { Properties, Event } from "../components";
 
 // Assets
 import richHouse from "../assets/img/richHouse.png";
@@ -42,6 +43,7 @@ export default Home = () => {
     debt: useRef(new Animated.Value(0)).current,
     popUpBackground: useRef(new Animated.Value(0)).current,
     popUp: useRef(new Animated.Value(0)).current,
+    eventTranslation: useRef(new Animated.Value(0)).current,
   };
 
   const availableProperties = [
@@ -49,7 +51,7 @@ export default Home = () => {
       img: richHouse,
       name: "Beach Mansion",
       price: {
-        int: 5_000_000,
+        int: 5000000,
         str: "5M",
       },
     },
@@ -57,16 +59,15 @@ export default Home = () => {
       img: poorHouse,
       name: "Small House",
       price: {
-        int: 100_000,
+        int: 100000,
         str: "100k",
       },
     },
-
     {
       img: poorHouse,
       name: "Small House",
       price: {
-        int: 100_000,
+        int: 100000,
         str: "100k",
       },
     },
@@ -74,13 +75,61 @@ export default Home = () => {
       img: richHouse,
       name: "Beach Mansion",
       price: {
-        int: 5_000_000,
+        int: 5000000,
         str: "5M",
       },
     },
   ];
 
+  const events = [
+    {
+      title: "The Coronavirus just hitted the U. S. A.",
+      description:
+        "Due to the coronavirus, all businness are closed and people do not know what is about to happen to the economy.",
+      multiplier: {
+        crypto: 5,
+        realEstate: 0.7,
+        stocks: 0.6,
+      },
+      next: "Government incentives",
+      acumulative: true,
+    },
+    {
+      title:
+        "The U. S. A. government just invested 10T on companies to counter the coronavirus crisis.",
+      description:
+        "Due to the coronavirus, the world's economy is passing throug the worst crisis since 1929. The U. S. A. government gave away incentives to people and invested in the stock market to counter it.",
+      multiplier: {
+        crypto: 1.2,
+        realEstate: 1,
+        stocks: 1.5,
+      },
+      next: null,
+      acumulative: true,
+    },
+  ];
+
+  const [currentEventIndex, setCurrentEventIndex] = useState(0);
+
   // Functions
+  const eventNavigation = (direction) => {
+    if (direction == "left" && currentEventIndex != 0) {
+      translateEvent("right", 150);
+      setTimeout(() => {
+        setCurrentEventIndex(currentEventIndex - 1);
+        translateEvent("left", 0);
+        translateEvent("center", 150);
+      }, 150);
+    } else if (direction == "right" && currentEventIndex != events.length - 1) {
+      translateEvent("left", 150);
+      setTimeout(() => {
+        setCurrentEventIndex(currentEventIndex + 1);
+        translateEvent("right", 0);
+        translateEvent("center", 150);
+      }, 150);
+    }
+  };
+
   const handlePopUp = (open, name) => {
     if (open) {
       if (name == "events") {
@@ -124,6 +173,19 @@ export default Home = () => {
     Animated.timing(animatedValues.popUp, {
       toValue: 1,
       duration: 150,
+      useNativeDriver: false,
+    }).start();
+  };
+
+  const translateEvent = (direction, duration) => {
+    Animated.timing(animatedValues.eventTranslation, {
+      toValue:
+        direction == "center"
+          ? 0
+          : direction == "left"
+          ? Dimensions.get("screen").width * -1
+          : Dimensions.get("screen").width,
+      duration: duration,
       useNativeDriver: false,
     }).start();
   };
@@ -217,6 +279,59 @@ export default Home = () => {
                     ))}
                   </View>
                 </ScrollView>
+              ) : (
+                <></>
+              )}
+              {eventsIsActive ? (
+                <View style={styles.eventsContainer}>
+                  <Animated.View
+                    style={{
+                      transform: [
+                        { translateX: animatedValues.eventTranslation },
+                      ],
+                      width: "100%",
+                    }}
+                  >
+                    <Event event={events[currentEventIndex]} />
+                  </Animated.View>
+                  <View style={styles.eventsNavContainer}>
+                    <TouchableOpacity
+                      style={styles.eventsNavArrowContainer}
+                      onPress={() => {
+                        eventNavigation("left");
+                      }}
+                    >
+                      <Entypo
+                        name="chevron-small-left"
+                        size={30}
+                        color={
+                          currentEventIndex == 0
+                            ? colors[colorScheme].containers
+                            : colors[colorScheme].fonts.primary
+                        }
+                      />
+                    </TouchableOpacity>
+                    <Text style={[styles.text, styles.eventsNavFrom]}>
+                      {`${currentEventIndex + 1} from ${events.length}`}
+                    </Text>
+                    <TouchableOpacity
+                      style={styles.eventsNavArrowContainer}
+                      onPress={() => {
+                        eventNavigation("right");
+                      }}
+                    >
+                      <Entypo
+                        name="chevron-small-right"
+                        size={30}
+                        color={
+                          currentEventIndex + 1 == events.length
+                            ? colors[colorScheme].containers
+                            : colors[colorScheme].fonts.primary
+                        }
+                      />
+                    </TouchableOpacity>
+                  </View>
+                </View>
               ) : (
                 <></>
               )}
@@ -498,6 +613,16 @@ export default Home = () => {
       backgroundColor: colors[colorScheme].background,
       justifyContent: "center",
     },
+    eventsContainer: {
+      justifyContent: "space-between",
+      height: "80%",
+    },
+    eventsNavContainer: {
+      flexDirection: "row",
+      alignItems: "center",
+      alignSelf: "center",
+      marginTop: 20,
+    },
     popUpContainer: {
       backgroundColor: colors[colorScheme].containers,
       height: "80%",
@@ -506,6 +631,7 @@ export default Home = () => {
       borderRadius: 20,
       zIndex: 200,
       alignItems: "center",
+      overflow: "hidden",
     },
     popUpTitle: {
       fontSize: 30,
