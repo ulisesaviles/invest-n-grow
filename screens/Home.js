@@ -148,6 +148,7 @@ export default Home = () => {
         }
         if (storeIsActive) {
           setStoreIsActive(false);
+          translateStore("right");
         }
       }, 100);
     }
