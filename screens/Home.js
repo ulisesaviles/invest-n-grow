@@ -36,6 +36,7 @@ export default Home = () => {
   const [selectedTab, setSelectedTab] = useState("assets");
   const [storeIsActive, setStoreIsActive] = useState(false);
   const [eventsIsActive, setEventsIsActive] = useState(false);
+  const [storeActiveItem, setStoreActiveItem] = useState(null);
 
   const animatedValues = {
     lifeQuality: useRef(new Animated.Value(0)).current,
@@ -44,6 +45,7 @@ export default Home = () => {
     popUpBackground: useRef(new Animated.Value(0)).current,
     popUp: useRef(new Animated.Value(0)).current,
     eventTranslation: useRef(new Animated.Value(0)).current,
+    storeTranslation: useRef(new Animated.Value(0)).current,
   };
 
   const availableProperties = [
@@ -190,6 +192,14 @@ export default Home = () => {
     }).start();
   };
 
+  const translateStore = (direction) => {
+    Animated.timing(animatedValues.storeTranslation, {
+      toValue: direction == "left" ? -0.9 * Dimensions.get("screen").width : 0,
+      duration: 200,
+      useNativeDriver: false,
+    }).start();
+  };
+
   const updateIndicators = (indicator, value) => {
     Animated.timing(animatedValues[indicator], {
       toValue: (Dimensions.get("screen").width * 0.95 - 40) * (value / 100),
@@ -256,29 +266,52 @@ export default Home = () => {
                 {storeIsActive ? "Store" : "Events"}
               </Text>
               {storeIsActive ? (
-                <ScrollView style={{ width: "100%" }}>
-                  <View style={styles.storeContainer}>
-                    {availableProperties.map((property) => (
-                      <View
-                        style={styles.storePropertyContainer}
-                        key={availableProperties.indexOf(property)}
-                      >
-                        <TouchableOpacity>
-                          <Text style={styles.storePropertyName}>
-                            {property.name}
-                          </Text>
-                          <Image
-                            source={property.img}
-                            style={styles.storePropertyImg}
-                          />
-                          <Text style={styles.storePropertyPrice}>
-                            {`$ ${property.price.str} dlls`}
-                          </Text>
-                        </TouchableOpacity>
-                      </View>
-                    ))}
+                <Animated.View
+                  style={[
+                    styles.storeHorizontalContainer,
+                    {
+                      transform: [
+                        { translateX: animatedValues.storeTranslation },
+                      ],
+                    },
+                  ]}
+                >
+                  <ScrollView style={{ width: "50%" }}>
+                    <View style={styles.storeContainer}>
+                      {availableProperties.map((property) => (
+                        <View
+                          style={styles.storePropertyContainer}
+                          key={availableProperties.indexOf(property)}
+                        >
+                          <TouchableOpacity
+                            onPress={() => {
+                              setStoreActiveItem(property);
+                              translateStore("left");
+                            }}
+                          >
+                            <Text style={styles.storePropertyName}>
+                              {property.name}
+                            </Text>
+                            <Image
+                              source={property.img}
+                              style={styles.storePropertyImg}
+                            />
+                            <Text style={styles.storePropertyPrice}>
+                              {`$ ${property.price.str} dlls`}
+                            </Text>
+                          </TouchableOpacity>
+                        </View>
+                      ))}
+                    </View>
+                  </ScrollView>
+                  <View style={styles.storeIndividualContainer}>
+                    <Text style={[styles.text, { textAlign: "center" }]}>
+                      {storeActiveItem != null
+                        ? JSON.stringify(storeActiveItem)
+                        : "hola"}
+                    </Text>
                   </View>
-                </ScrollView>
+                </Animated.View>
               ) : (
                 <></>
               )}
@@ -290,6 +323,7 @@ export default Home = () => {
                         { translateX: animatedValues.eventTranslation },
                       ],
                       width: "100%",
+                      flexDirection: "row",
                     }}
                   >
                     <Event event={events[currentEventIndex]} />
@@ -713,6 +747,17 @@ export default Home = () => {
       flexWrap: "wrap",
       flexDirection: "row",
       justifyContent: "space-evenly",
+    },
+    storeHorizontalContainer: {
+      width: "200%",
+      flexDirection: "row",
+      alignSelf: "flex-start",
+    },
+    storeIndividualContainer: {
+      width: "50%",
+      height: "100%",
+      justifyContent: "center",
+      alignItems: "center",
     },
     storePropertyContainer: {
       backgroundColor: colors[colorScheme].subContainers,
