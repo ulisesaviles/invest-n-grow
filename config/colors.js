@@ -13,8 +13,8 @@ export default {
     },
     gradients: {
       green: {
-        start: "#4CD964",
-        end: "#56F270",
+        start: "#45C65B",
+        end: "#67FF80",
       },
       blue: {
         start: "#007AFF",
@@ -49,8 +49,8 @@ export default {
     },
     gradients: {
       green: {
-        start: "#4CD964",
-        end: "#56F270",
+        start: "#45C65B",
+        end: "#67FF80",
       },
       blue: {
         start: "#007AFF",
