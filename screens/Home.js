@@ -56,6 +56,17 @@ export default Home = () => {
         int: 5000000,
         str: "5M",
       },
+      type: "realEstate",
+      stats: {
+        asset: {
+          cashFlow: 25000,
+          lifeQuality: 0,
+        },
+        commodity: {
+          cashFlow: -2000,
+          lifeQuality: 30,
+        },
+      },
     },
     {
       img: poorHouse,
@@ -306,10 +317,183 @@ export default Home = () => {
                     </View>
                   </ScrollView>
                   <View style={styles.storeIndividualContainer}>
+                    <LinearGradient
+                      colors={[
+                        colors[colorScheme].gradients.orange.start,
+                        colors[colorScheme].gradients.orange.end,
+                      ]}
+                      style={styles.storeBackBtn}
+                      start={{ x: 0, y: 0 }}
+                      end={{ x: 1, y: 1 }}
+                    >
+                      <TouchableOpacity
+                        onPress={() => {
+                          translateStore("right");
+                        }}
+                        style={{ padding: 5 }}
+                      >
+                        <View style={styles.storeBackContentContainer}>
+                          <Entypo
+                            name="chevron-left"
+                            size={20}
+                            color={"rgb(255,255,255)"}
+                          />
+                          <Text style={styles.storeBack}>Properties</Text>
+                        </View>
+                      </TouchableOpacity>
+                    </LinearGradient>
                     <Text style={[styles.text, { textAlign: "center" }]}>
-                      {storeActiveItem != null
-                        ? JSON.stringify(storeActiveItem)
-                        : "hola"}
+                      {storeActiveItem != null ? (
+                        // JSON.stringify(storeActiveItem)
+                        <ScrollView
+                          style={{
+                            height: "100%",
+                            width: "100%",
+                          }}
+                        >
+                          <View style={styles.storeIndividualItemContainer}>
+                            <Text
+                              style={[
+                                styles.text,
+                                styles.storeIndividualItemTitle,
+                              ]}
+                            >
+                              {storeActiveItem.name}
+                            </Text>
+                            <Image
+                              style={styles.storeIndividualItemImg}
+                              source={storeActiveItem.img}
+                            />
+                            <View style={styles.storeStatsContainer}>
+                              <Text
+                                style={[styles.storeStatsTitle, styles.text]}
+                              >
+                                Stats
+                              </Text>
+                              {storeActiveItem.type == "realEstate" ? (
+                                <>
+                                  <Text
+                                    style={[
+                                      styles.storeStatsStubtitle,
+                                      styles.text,
+                                    ]}
+                                  >
+                                    As a commodity:
+                                  </Text>
+                                  <View style={styles.storeStatsLine}>
+                                    <Text
+                                      style={[
+                                        styles.storeStatName,
+                                        styles.text,
+                                      ]}
+                                    >
+                                      Life Quality:
+                                    </Text>
+                                    <Text style={[styles.text]}>
+                                      {`${
+                                        storeActiveItem.stats.commodity
+                                          .lifeQuality > 0
+                                          ? "+"
+                                          : ""
+                                      }${
+                                        storeActiveItem.stats.commodity
+                                          .lifeQuality
+                                      }pts`}
+                                    </Text>
+                                  </View>
+                                  <View style={styles.storeStatsLine}>
+                                    <Text
+                                      style={[
+                                        styles.storeStatName,
+                                        styles.text,
+                                      ]}
+                                    >
+                                      Cash flow:
+                                    </Text>
+                                    <Text style={[styles.text]}>
+                                      {`${
+                                        storeActiveItem.stats.commodity
+                                          .cashFlow > 0
+                                          ? "+"
+                                          : ""
+                                      }$${
+                                        storeActiveItem.stats.commodity.cashFlow
+                                      }`}
+                                    </Text>
+                                  </View>
+                                  <View style={styles.storeStatsSeparator} />
+                                  <Text
+                                    style={[
+                                      styles.storeStatsStubtitle,
+                                      styles.text,
+                                    ]}
+                                  >
+                                    As an asset:
+                                  </Text>
+                                  <View style={styles.storeStatsLine}>
+                                    <Text
+                                      style={[
+                                        styles.storeStatName,
+                                        styles.text,
+                                      ]}
+                                    >
+                                      Life Quality:
+                                    </Text>
+                                    <Text style={[styles.text]}>
+                                      {`${
+                                        storeActiveItem.stats.asset
+                                          .lifeQuality > 0
+                                          ? "+"
+                                          : ""
+                                      }${
+                                        storeActiveItem.stats.asset.lifeQuality
+                                      }pts`}
+                                    </Text>
+                                  </View>
+                                  <View style={styles.storeStatsLine}>
+                                    <Text
+                                      style={[
+                                        styles.storeStatName,
+                                        styles.text,
+                                      ]}
+                                    >
+                                      Cash flow:
+                                    </Text>
+                                    <Text style={[styles.text]}>
+                                      {`${
+                                        storeActiveItem.stats.asset.cashFlow > 0
+                                          ? "+"
+                                          : ""
+                                      }$${
+                                        storeActiveItem.stats.asset.cashFlow
+                                      }`}
+                                    </Text>
+                                  </View>
+                                </>
+                              ) : (
+                                <></>
+                              )}
+                            </View>
+                            <LinearGradient
+                              colors={[
+                                colors[colorScheme].gradients.green.start,
+                                colors[colorScheme].gradients.green.end,
+                              ]}
+                              style={styles.storeBuyBtn}
+                              start={{ x: 0, y: 0 }}
+                              end={{ x: 1, y: 1 }}
+                            >
+                              <TouchableOpacity>
+                                <Text
+                                  style={styles.storeBuy}
+                                >{`Buy at $${storeActiveItem.price.str}`}</Text>
+                              </TouchableOpacity>
+                            </LinearGradient>
+                          </View>
+                        </ScrollView>
+                      ) : (
+                        "hola"
+                      )}
                     </Text>
                   </View>
                 </Animated.View>
@@ -729,6 +913,19 @@ export default Home = () => {
       marginTop: Dimensions.get("screen").height * 0.25,
       flexDirection: "column",
     },
+    storeBack: {
+      color: "rgb(255,255,255)",
+      fontSize: 18,
+      fontWeight: "600",
+      marginRight: 5,
+    },
+    storeBackBtn: {
+      borderRadius: 10,
+      position: "absolute",
+      top: 0,
+      left: 10,
+      zIndex: 100,
+    },
     storeBtn: {
       position: "absolute",
       right: Dimensions.get("screen").width * 0.025,
@@ -741,6 +938,28 @@ export default Home = () => {
         height: 3,
       },
       shadowOpacity: 0.16,
+    },
+    storeBackContentContainer: {
+      flexDirection: "row",
+      alignItems: "center",
+    },
+    storeBuy: {
+      color: "rgb(255,255,255)",
+      fontSize: 20,
+      fontWeight: "700",
+    },
+    storeBuyBtn: {
+      shadowColor: colors[colorScheme].boxShadow,
+      shadowRadius: 4,
+      shadowOffset: {
+        width: 0,
+        height: 3,
+      },
+      shadowOpacity: 0.16,
+      borderRadius: 10,
+      paddingHorizontal: 40,
+      paddingVertical: 5,
+      marginTop: 20,
     },
     storeContainer: {
       width: "100%",
@@ -757,8 +976,21 @@ export default Home = () => {
     storeIndividualContainer: {
       width: "50%",
       height: "100%",
-      justifyContent: "center",
       alignItems: "center",
+    },
+    storeIndividualItemContainer: {
+      width: "100%",
+      alignItems: "center",
+      paddingTop: 50,
+    },
+    storeIndividualItemImg: {
+      height: 200,
+      width: 250,
+    },
+    storeIndividualItemTitle: {
+      fontWeight: "700",
+      fontSize: 30,
+      marginBottom: 20,
     },
     storePropertyContainer: {
       backgroundColor: colors[colorScheme].subContainers,
@@ -793,6 +1025,37 @@ export default Home = () => {
       marginTop: 10,
       color: colors[colorScheme].fonts.primary,
       fontWeight: "600",
+    },
+    storeStatsContainer: {
+      borderRadius: 10,
+      shadowColor: colors[colorScheme].boxShadow,
+      shadowRadius: 4,
+      shadowOffset: {
+        width: 0,
+        height: 3,
+      },
+      shadowOpacity: 0.16,
+      alignItems: "center",
+      backgroundColor: colors[colorScheme].subContainers,
+      padding: 15,
+      marginTop: 10,
+    },
+    storeStatsLine: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+    },
+    storeStatName: {
+      fontWeight: "500",
+      marginRight: 5,
+    },
+    storeStatsStubtitle: {
+      fontSize: 17,
+      fontWeight: "600",
+      marginTop: 5,
+    },
+    storeStatsTitle: {
+      fontSize: 20,
+      fontWeight: "700",
     },
     sucesosBtn: {
       position: "absolute",
