@@ -32,7 +32,6 @@ export default Popups = () => {
   let colorScheme = useColorScheme();
   const [storeIsActive, setStoreIsActive] = useState(false);
   const [eventsIsActive, setEventsIsActive] = useState(false);
-  console.log(`\nStore: ${storeIsActive}\nEvents: ${eventsIsActive}\n`);
   const [storeActiveItem, setStoreActiveItem] = useState(null);
   const [firstLoad, setFirtsLoad] = useState(true);
   const [updater, update] = useState("");
