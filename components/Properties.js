@@ -18,7 +18,12 @@ import poorHouse from "../assets/img/poorHouse.png";
 import { Entypo } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 
+import store from "../config/redux/store";
+
 export default Properties = () => {
+  // store.subscribe(() => {
+  //   console.log(`State changed: ${JSON.stringify(store.getState())}`);
+  // });
   let colorScheme = useColorScheme();
   const [property, setProperty] = useState(richHouse);
 
