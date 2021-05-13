@@ -206,8 +206,6 @@ export default Popups = () => {
     });
   }
 
-  console.log(`Popup active: ${storeIsActive || eventsIsActive}`);
-
   // Render
   const render = () => {
     return (
@@ -236,7 +234,6 @@ export default Popups = () => {
                       },
                     });
                   }, 100);
-                  console.log("click");
                 }}
                 style={{ height: "100%", width: "100%" }}
               ></TouchableOpacity>
@@ -268,7 +265,6 @@ export default Popups = () => {
                         },
                       });
                     }, 100);
-                    console.log("click");
                   }}
                   style={{ padding: 10 }}
                 >
