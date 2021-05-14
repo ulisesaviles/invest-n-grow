@@ -1,0 +1,186 @@
+[
+  {
+    "name": "Beach Mansion",
+    "img": "richHouse",
+    "value": 5000000,
+    "type": "realEstate",
+    "stats": {
+      "asset": {
+        "cashFlow": 25000,
+        "lifeQuality": 0
+      },
+      "commodity": {
+        "cashFlow": -2000,
+        "lifeQuality": 40
+      }
+    }
+  },
+  {
+    "name": "Big House",
+    "img": "bigHouse",
+    "value": 600000,
+    "type": "realEstate",
+    "stats": {
+      "asset": {
+        "cashFlow": 1000,
+        "lifeQuality": 0
+      },
+      "commodity": {
+        "cashFlow": -100,
+        "lifeQuality": 20
+      }
+    }
+  },
+  {
+    "name": "Small House",
+    "img": "poorHouse",
+    "value": 200000,
+    "type": "realEstate",
+    "stats": {
+      "asset": {
+        "cashFlow": 1000,
+        "lifeQuality": 0
+      },
+      "commodity": {
+        "cashFlow": -100,
+        "lifeQuality": 0
+      }
+    }
+  },
+  {
+    "name": "Bitcoin",
+    "img": "bitcoin",
+    "value": 1000,
+    "type": "crypto",
+    "stats": {
+      "asset": {
+        "cashFlow": 0,
+        "lifeQuality": 0
+      },
+      "commodity": {
+        "cashFlow": 0,
+        "lifeQuality": 0
+      }
+    }
+  },
+  {
+    "name": "Small Deparment",
+    "img": "smallDepartment",
+    "value": 100000,
+    "type": "realEstate",
+    "stats": {
+      "asset": {
+        "cashFlow": 800,
+        "lifeQuality": 10
+      },
+      "commodity": {
+        "cashFlow": -80,
+        "lifeQuality": 0
+      }
+    }
+  },
+  {
+    "name": "Luxurious Deparment",
+    "img": "richDepartment",
+    "value": 1000000,
+    "type": "realEstate",
+    "stats": {
+      "asset": {
+        "cashFlow": 10000,
+        "lifeQuality": 10
+      },
+      "commodity": {
+        "cashFlow": -800,
+        "lifeQuality": 30
+      }
+    }
+  },
+  {
+    "name": "Salary",
+    "img": "salary",
+    "value": 0,
+    "type": "salary",
+    "stats": {
+      "asset": {
+        "cashFlow": 4000,
+        "lifeQuality": -50
+      }
+    }
+  },
+  {
+    "name": "Cash",
+    "img": "cash",
+    "value": 1,
+    "type": "cash",
+    "stats": {
+      "asset": {
+        "cashFlow": 0.01,
+        "lifeQuality": 0
+      },
+      "commodity": {
+        "cashFlow": 0.002,
+        "lifeQuality": 0
+      }
+    }
+  },
+  {
+    "name": "Small Business",
+    "img": "smallBisuness",
+    "value": 1000000,
+    "type": "business",
+    "stats": {
+      "asset": {
+        "cashFlow": 10000,
+        "lifeQuality": -10
+      }
+    }
+  },
+  {
+    "name": "Cheap Car",
+    "img": "poorCar",
+    "value": 5000,
+    "type": "car",
+    "stats": {
+      "asset": {
+        "cashFlow": 400,
+        "lifeQuality": 0
+      },
+      "commodity": {
+        "cashFlow": -200,
+        "lifeQuality": -10
+      }
+    }
+  },
+  {
+    "name": "Cybertruck",
+    "img": "Cybertruck",
+    "value": 40000,
+    "type": "car",
+    "stats": {
+      "asset": {
+        "cashFlow": 4000,
+        "lifeQuality": 0
+      },
+      "commodity": {
+        "cashFlow": -200,
+        "lifeQuality": -10
+      }
+    }
+  },
+  {
+    "name": "Luxurious Car",
+    "img": "richCar",
+    "value": 200000,
+    "type": "car",
+    "stats": {
+      "asset": {
+        "cashFlow": 10000,
+        "lifeQuality": 0
+      },
+      "commodity": {
+        "cashFlow": -200,
+        "lifeQuality": -10
+      }
+    }
+  }
+]
