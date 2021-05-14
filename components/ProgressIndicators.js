@@ -12,7 +12,7 @@ import { LinearGradient } from "expo-linear-gradient";
 // Local imports
 import colors from "../config/colors";
 
-export default Home = () => {
+export default ProgressIndicator = () => {
   // Constants
   let colorScheme = useColorScheme();
   const [firstload, setFirtsLoad] = useState(true);
