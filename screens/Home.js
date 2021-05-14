@@ -21,7 +21,7 @@ import { LinearGradient } from "expo-linear-gradient";
 
 // Local imports
 import colors from "../config/colors";
-import { Properties, Event } from "../components";
+import { Properties, Event, ProgressIndicators } from "../components";
 
 // Assets
 import Bill from "../assets/img/bill-icon.png";
@@ -80,85 +80,7 @@ export default Home = () => {
         <SafeAreaView
           style={{ width: "100%", height: "100%", position: "absolute" }}
         >
-          <View style={styles.progressIndicator}>
-            <View style={styles.progressContainer}>
-              <View style={styles.progressGroup}>
-                <View style={styles.progressTextContainer}>
-                  <Text style={[styles.progressText, { fontWeight: "700" }]}>
-                    Life Quality
-                  </Text>
-                  <Text style={styles.progressText}>100pts</Text>
-                </View>
-                <View style={styles.progressBarContainer}>
-                  <Animated.View
-                    style={{
-                      width: animatedValues.lifeQuality,
-                    }}
-                  >
-                    <LinearGradient
-                      colors={[
-                        colors[colorScheme].gradients.blue.start,
-                        colors[colorScheme].gradients.blue.end,
-                      ]}
-                      style={[styles.progressBar, { width: "100%" }]}
-                      start={{ x: 0, y: 0 }}
-                      end={{ x: 1, y: 1 }}
-                    />
-                  </Animated.View>
-                </View>
-              </View>
-              <View style={styles.progressGroup}>
-                <View style={styles.progressTextContainer}>
-                  <Text style={[styles.progressText, { fontWeight: "700" }]}>
-                    Herritage
-                  </Text>
-                  <Text style={styles.progressText}>$10M</Text>
-                </View>
-                <View style={styles.progressBarContainer}>
-                  <Animated.View
-                    style={{
-                      width: animatedValues.herritage,
-                    }}
-                  >
-                    <LinearGradient
-                      colors={[
-                        colors[colorScheme].gradients.green.start,
-                        colors[colorScheme].gradients.green.end,
-                      ]}
-                      style={[styles.progressBar, { width: "100%" }]}
-                      start={{ x: 0, y: 0 }}
-                      end={{ x: 1, y: 1 }}
-                    />
-                  </Animated.View>
-                </View>
-              </View>
-              <View style={styles.progressGroup}>
-                <View style={styles.progressTextContainer}>
-                  <Text style={[styles.progressText, { fontWeight: "700" }]}>
-                    Debt
-                  </Text>
-                  <Text style={styles.progressText}>$10M</Text>
-                </View>
-                <View style={styles.progressBarContainer}>
-                  <Animated.View
-                    style={{
-                      width: animatedValues.debt,
-                    }}
-                  >
-                    <LinearGradient
-                      colors={[
-                        colors[colorScheme].gradients.red.start,
-                        colors[colorScheme].gradients.red.end,
-                      ]}
-                      style={[styles.progressBar, { width: "100%" }]}
-                      start={{ x: 0, y: 0 }}
-                      end={{ x: 1, y: 1 }}
-                    />
-                  </Animated.View>
-                </View>
-              </View>
-            </View>
-          </View>
+          <ProgressIndicators />
           <View style={styles.properties}>
             <Properties />
             <View style={styles.btnsContainer}>
