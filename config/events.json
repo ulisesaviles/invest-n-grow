@@ -1,0 +1,236 @@
+[
+  {
+    "name": "Coronavirus",
+    "title": "The Coronavirus just hitted the U. S. A.",
+    "description": "Due to the coronavirus, all businness are closed and people do not know what is about to happen to the economy.",
+    "multiplier": {
+      "crypto": 5,
+      "realEstate": 0.7,
+      "stocks": 0.6,
+      "cars": 1
+    },
+    "next": "Government incentives",
+    "acumulative": true
+  },
+  {
+    "name": "Government incentives",
+    "title": "The U. S. A. government just invested 10T on companies to counter the coronavirus crisis.",
+    "description": "Due to the coronavirus, the world's economy is passing throug the worst crisis since 1929. The U. S. A. government gave away incentives to people and invested in the stock market to counter it.",
+    "multiplier": {
+      "crypto": 5,
+      "realEstate": 1,
+      "stocks": 2,
+      "cars": 1
+    },
+    "next": null,
+    "acumulative": true
+  },
+  {
+    "name": "USA ellections",
+    "title": "The U. S. A. is close to presidential elections.",
+    "description": "The U. S. A. is close to presidential elections. There is a lot of uncertainty around the world about the stability of the country.",
+    "multiplier": {
+      "crypto": 4,
+      "realEstate": 0.9,
+      "stocks": 0.8,
+      "cars": 0.9
+    },
+    "next": "The government stabilizes",
+    "acumulative": true
+  },
+  {
+    "name": "The government stabilizes",
+    "title": "After the uncertainty, the goverment stabilizes.",
+    "description": "The new cabinet has everything under control. The economy's growth returns to normal.",
+    "multiplier": {
+      "crypto": 1.1,
+      "realEstate": 1.1,
+      "stocks": 1.1,
+      "cars": 1.1
+    },
+    "next": "The government stabilizes",
+    "acumulative": true
+  },
+  {
+    "name": "2008",
+    "title": "Lehman brothers goes bankrupt!",
+    "description": "The bank, Lehman brothers, filed for bankruptcy. Many institutions get affected and a chain of events causes a global crisis.",
+    "multiplier": {
+      "crypto": 4,
+      "realEstate": 0.9,
+      "stocks": 0.8,
+      "cars": 0.9
+    },
+    "next": "Post-crisis",
+    "acumulative": true
+  },
+  {
+    "name": "Post-crisis",
+    "title": "Post crisis expansion",
+    "description": "After 2008's crisis, economy is getting stable and new startups are appearing.",
+    "multiplier": {
+      "crypto": 1.5,
+      "realEstate": 1.2,
+      "stocks": 1.5,
+      "cars": 1
+    },
+    "next": null,
+    "acumulative": true
+  },
+  {
+    "name": "Apple",
+    "title": "AAPL just reached 2T market cap!",
+    "description": "Apple just reached the 2T market cap due to a solid strategy. It raises up the expectations for other tech firms.",
+    "multiplier": {
+      "crypto": 1,
+      "realEstate": 1,
+      "stocks": 1.5,
+      "cars": 1
+    },
+    "next": null,
+    "acumulative": true
+  },
+  {
+    "name": "Tesla",
+    "title": "Tesla just realised a new line of cars. As always, lots of innovation and new features at a reasonable price.",
+    "description": "Apple just reached the 2T market cap due to a solid strategy. It raises up the expectations for other tech firms.",
+    "multiplier": {
+      "crypto": 1,
+      "realEstate": 1,
+      "stocks": 1.5,
+      "cars": 0.8
+    },
+    "next": null,
+    "acumulative": true
+  },
+  {
+    "name": "WWB",
+    "title": "Wallstreet bets just inflated the market",
+    "description": "The subredit WallStreetBets decided to inflate the market to 'make rich people angry'.",
+    "multiplier": {
+      "crypto": 2,
+      "realEstate": 1,
+      "stocks": 10,
+      "cars": 1
+    },
+    "next": "Robinhood",
+    "acumulative": true
+  },
+  {
+    "name": "Robinhood",
+    "title": "Rich people got angry",
+    "description": "Robinhood (a stock trader app) does not allow people to buy artificially inflated stocks, but they do allow to sell them.",
+    "multiplier": {
+      "crypto": 0.9,
+      "realEstate": 1,
+      "stocks": 0.2,
+      "cars": 1
+    },
+    "next": null,
+    "acumulative": true
+  },
+  {
+    "name": "Airbnb",
+    "title": "Airbnb is a game changer",
+    "description": "Airbnb lets people rent their properties, now it is easier to monetize real estate",
+    "multiplier": {
+      "crypto": 1,
+      "realEstate": 1.5,
+      "stocks": 1.1,
+      "cars": 1
+    },
+    "next": null,
+    "acumulative": true
+  },
+  {
+    "name": "cryptoDay",
+    "title": "Nothing relevant happened",
+    "description": "Just another month being rich. ",
+    "multiplier": {
+      "crypto": 1.1,
+      "realEstate": 1,
+      "stocks": 1,
+      "cars": 1
+    },
+    "next": null,
+    "acumulative": true
+  },
+  {
+    "name": "rEDay",
+    "title": "Nothing relevant happened",
+    "description": "Just another month being rich. ",
+    "multiplier": {
+      "crypto": 1,
+      "realEstate": 1.1,
+      "stocks": 1,
+      "cars": 1
+    },
+    "next": null,
+    "acumulative": true
+  },
+  {
+    "name": "stocksDay",
+    "title": "Nothing relevant happened",
+    "description": "Just another month being rich. ",
+    "multiplier": {
+      "crypto": 1,
+      "realEstate": 1,
+      "stocks": 1.1,
+      "cars": 1
+    },
+    "next": null,
+    "acumulative": true
+  },
+  {
+    "name": "carsDay",
+    "title": "Nothing relevant happened",
+    "description": "Just another month being rich. ",
+    "multiplier": {
+      "crypto": 1,
+      "realEstate": 1,
+      "stocks": 1,
+      "cars": 1.1
+    },
+    "next": null,
+    "acumulative": true
+  },
+  {
+    "name": "everytingDay",
+    "title": "Nothing relevant happened",
+    "description": "Just another month being rich. ",
+    "multiplier": {
+      "crypto": 1.1,
+      "realEstate": 1.1,
+      "stocks": 1.1,
+      "cars": 1.1
+    },
+    "next": null,
+    "acumulative": true
+  },
+  {
+    "name": ".com bubble",
+    "title": ".com bubble.",
+    "description": "Tech startups fall down, stock prices were artificially inflated.",
+    "multiplier": {
+      "crypto": 0.5,
+      "realEstate": 1.1,
+      "stocks": 0.5,
+      "cars": 1.1
+    },
+    "next": "Prices return to normal",
+    "acumulative": true
+  },
+  {
+    "name": "Prices return to normal",
+    "title": "Prices return to normal",
+    "description": "After the .com bubble, the companies that survived's stock price is now their real value",
+    "multiplier": {
+      "crypto": 2,
+      "realEstate": 1,
+      "stocks": 2,
+      "cars": 1
+    },
+    "next": null,
+    "acumulative": true
+  }
+]
