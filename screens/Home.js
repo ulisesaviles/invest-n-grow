@@ -19,12 +19,7 @@ import { LinearGradient } from "expo-linear-gradient";
 
 // Local imports
 import colors from "../config/colors";
-import {
-  Properties,
-  Event,
-  ProgressIndicators,
-  MyProperties,
-} from "../components";
+import { Properties, ProgressIndicators, MyProperties } from "../components";
 
 // Assets
 import Popups from "../components/Popups";
