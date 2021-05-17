@@ -22,10 +22,9 @@ import { Entypo } from "@expo/vector-icons";
 
 // Local imports
 import colors from "../config/colors";
-
-// Assets
-import richHouse from "../assets/img/richHouse.png";
-import poorHouse from "../assets/img/poorHouse.png";
+import events from "../config/events.json";
+import properties from "../config/properties";
+import { priceToStr } from "../config/formatter";
 
 export default Popups = () => {
   // Constants
@@ -34,7 +33,6 @@ export default Popups = () => {
   const [eventsIsActive, setEventsIsActive] = useState(false);
   const [storeActiveItem, setStoreActiveItem] = useState(null);
   const [firstLoad, setFirtsLoad] = useState(true);
-  const [updater, update] = useState("");
 
   const animatedValues = {
     popUpBackground: useRef(new Animated.Value(0)).current,
@@ -42,80 +40,6 @@ export default Popups = () => {
     eventTranslation: useRef(new Animated.Value(0)).current,
     storeTranslation: useRef(new Animated.Value(0)).current,
   };
-
-  const availableProperties = [
-    {
-      img: richHouse,
-      name: "Beach Mansion",
-      price: {
-        int: 5000000,
-        str: "5M",
-      },
-      type: "realEstate",
-      stats: {
-        asset: {
-          cashFlow: 25000,
-          lifeQuality: 0,
-        },
-        commodity: {
-          cashFlow: -2000,
-          lifeQuality: 30,
-        },
-      },
-    },
-    {
-      img: poorHouse,
-      name: "Small House",
-      price: {
-        int: 100000,
-        str: "100k",
-      },
-    },
-    {
-      img: poorHouse,
-      name: "Small House",
-      price: {
-        int: 100000,
-        str: "100k",
-      },
-    },
-    {
-      img: richHouse,
-      name: "Beach Mansion",
-      price: {
-        int: 5000000,
-        str: "5M",
-      },
-    },
-  ];
-
-  const events = [
-    {
-      title: "The Coronavirus just hitted the U. S. A.",
-      description:
-        "Due to the coronavirus, all businness are closed and people do not know what is about to happen to the economy.",
-      multiplier: {
-        crypto: 5,
-        realEstate: 0.7,
-        stocks: 0.6,
-      },
-      next: "Government incentives",
-      acumulative: true,
-    },
-    {
-      title:
-        "The U. S. A. government just invested 10T on companies to counter the coronavirus crisis.",
-      description:
-        "Due to the coronavirus, the world's economy is passing throug the worst crisis since 1929. The U. S. A. government gave away incentives to people and invested in the stock market to counter it.",
-      multiplier: {
-        crypto: 1.2,
-        realEstate: 1,
-        stocks: 1.5,
-      },
-      next: null,
-      acumulative: true,
-    },
-  ];
 
   const [currentEventIndex, setCurrentEventIndex] = useState(0);
 
@@ -202,7 +126,6 @@ export default Popups = () => {
       setEventsIsActive(newState.popupStates.events);
       newState.popupStates.store ? handlePopup(true, "store") : null;
       newState.popupStates.events ? handlePopup(true, "events") : null;
-      update(JSON.stringify(newState));
     });
   }
 
@@ -211,8 +134,15 @@ export default Popups = () => {
     return (
       <>
         {storeIsActive || eventsIsActive ? (
-          <>
-            <Text style={{ opacity: 0 }}>{updater}</Text>
+          <View
+            style={{
+              justifyContent: "center",
+              zIndex: 100,
+              width: "100%",
+              height: "100%",
+              alignItems: "center",
+            }}
+          >
             <Animated.View
               style={[
                 styles.blurBackground,
@@ -289,12 +219,12 @@ export default Popups = () => {
                     },
                   ]}
                 >
-                  <ScrollView style={{ width: "50%" }}>
+                  <ScrollView style={{ width: "50%", height: "52%" }}>
                     <View style={styles.storeContainer}>
-                      {availableProperties.map((property) => (
+                      {properties.map((property) => (
                         <View
                           style={styles.storePropertyContainer}
-                          key={availableProperties.indexOf(property)}
+                          key={properties.indexOf(property)}
                         >
                           <TouchableOpacity
                             onPress={() => {
@@ -310,7 +240,7 @@ export default Popups = () => {
                               style={styles.storePropertyImg}
                             />
                             <Text style={styles.storePropertyPrice}>
-                              {`$ ${property.price.str} dlls`}
+                              {`$ ${priceToStr(property.value)} dlls`}
                             </Text>
                           </TouchableOpacity>
                         </View>
@@ -416,9 +346,9 @@ export default Popups = () => {
                                           .cashFlow > 0
                                           ? "+"
                                           : ""
-                                      }$${
+                                      }$${priceToStr(
                                         storeActiveItem.stats.commodity.cashFlow
-                                      }`}
+                                      )}`}
                                     </Text>
                                   </View>
                                   <View style={styles.storeStatsSeparator} />
@@ -464,9 +394,9 @@ export default Popups = () => {
                                         storeActiveItem.stats.asset.cashFlow > 0
                                           ? "+"
                                           : ""
-                                      }$${
+                                      }$${priceToStr(
                                         storeActiveItem.stats.asset.cashFlow
-                                      }`}
+                                      )}`}
                                     </Text>
                                   </View>
                                 </>
@@ -486,7 +416,9 @@ export default Popups = () => {
                               <TouchableOpacity>
                                 <Text
                                   style={styles.storeBuy}
-                                >{`Buy at $${storeActiveItem.price.str}`}</Text>
+                                >{`Buy at $${priceToStr(
+                                  storeActiveItem.value
+                                )}`}</Text>
                               </TouchableOpacity>
                             </LinearGradient>
                           </View>
@@ -555,7 +487,7 @@ export default Popups = () => {
                 <></>
               )}
             </Animated.View>
-          </>
+          </View>
         ) : (
           <></>
         )}
@@ -603,7 +535,6 @@ export default Popups = () => {
       backgroundColor: colors[colorScheme].containers,
       height: "80%",
       width: "90%",
-      alignSelf: "center",
       borderRadius: 20,
       zIndex: 200,
       alignItems: "center",
