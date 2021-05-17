@@ -25,6 +25,7 @@ import colors from "../config/colors";
 import events from "../config/events.json";
 import properties from "../config/properties";
 import { priceToStr } from "../config/formatter";
+import { getEvent } from "../config/eventsHandler";
 
 export default Popups = () => {
   // Constants
@@ -116,16 +117,22 @@ export default Popups = () => {
       useNativeDriver: false,
     }).start();
   };
-
   if (firstLoad) {
     setFirtsLoad(false);
     let newState;
+    let currentState;
     store.subscribe(() => {
       newState = store.getState();
-      setStoreIsActive(newState.popupStates.store);
-      setEventsIsActive(newState.popupStates.events);
-      newState.popupStates.store ? handlePopup(true, "store") : null;
-      newState.popupStates.events ? handlePopup(true, "events") : null;
+      if (
+        currentState === undefined ||
+        currentState.popupStates !== newState.popupStates
+      ) {
+        currentState = newState;
+        setStoreIsActive(newState.popupStates.store);
+        setEventsIsActive(newState.popupStates.events);
+        newState.popupStates.store ? handlePopup(true, "store") : null;
+        newState.popupStates.events ? handlePopup(true, "events") : null;
+      }
     });
   }
 
