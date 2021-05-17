@@ -10,7 +10,8 @@
       "cars": 1
     },
     "next": "Government incentives",
-    "acumulative": true
+    "acumulative": true,
+    "onlyOnSequence": false
   },
   {
     "name": "Government incentives",
@@ -23,7 +24,8 @@
       "cars": 1
     },
     "next": null,
-    "acumulative": true
+    "acumulative": true,
+    "onlyOnSequence": true
   },
   {
     "name": "USA ellections",
@@ -36,7 +38,8 @@
       "cars": 0.9
     },
     "next": "The government stabilizes",
-    "acumulative": true
+    "acumulative": true,
+    "onlyOnSequence": false
   },
   {
     "name": "The government stabilizes",
@@ -49,7 +52,8 @@
       "cars": 1.1
     },
     "next": "The government stabilizes",
-    "acumulative": true
+    "acumulative": true,
+    "onlyOnSequence": true
   },
   {
     "name": "2008",
@@ -62,7 +66,8 @@
       "cars": 0.9
     },
     "next": "Post-crisis",
-    "acumulative": true
+    "acumulative": true,
+    "onlyOnSequence": false
   },
   {
     "name": "Post-crisis",
@@ -75,7 +80,8 @@
       "cars": 1
     },
     "next": null,
-    "acumulative": true
+    "acumulative": true,
+    "onlyOnSequence": true
   },
   {
     "name": "Apple",
@@ -88,12 +94,13 @@
       "cars": 1
     },
     "next": null,
-    "acumulative": true
+    "acumulative": true,
+    "onlyOnSequence": false
   },
   {
     "name": "Tesla",
-    "title": "Tesla just realised a new line of cars. As always, lots of innovation and new features at a reasonable price.",
-    "description": "Apple just reached the 2T market cap due to a solid strategy. It raises up the expectations for other tech firms.",
+    "title": "Tesla just realised a new line of cars.",
+    "description": "Tesla just realised a new line of cars. As always, lots of innovation and new features at a reasonable price.",
     "multiplier": {
       "crypto": 1,
       "realEstate": 1,
@@ -101,7 +108,8 @@
       "cars": 0.8
     },
     "next": null,
-    "acumulative": true
+    "acumulative": true,
+    "onlyOnSequence": false
   },
   {
     "name": "WWB",
@@ -114,7 +122,8 @@
       "cars": 1
     },
     "next": "Robinhood",
-    "acumulative": true
+    "acumulative": true,
+    "onlyOnSequence": false
   },
   {
     "name": "Robinhood",
@@ -127,7 +136,8 @@
       "cars": 1
     },
     "next": null,
-    "acumulative": true
+    "acumulative": true,
+    "onlyOnSequence": true
   },
   {
     "name": "Airbnb",
@@ -140,7 +150,8 @@
       "cars": 1
     },
     "next": null,
-    "acumulative": true
+    "acumulative": true,
+    "onlyOnSequence": false
   },
   {
     "name": "cryptoDay",
@@ -153,7 +164,8 @@
       "cars": 1
     },
     "next": null,
-    "acumulative": true
+    "acumulative": true,
+    "onlyOnSequence": false
   },
   {
     "name": "rEDay",
@@ -166,7 +178,8 @@
       "cars": 1
     },
     "next": null,
-    "acumulative": true
+    "acumulative": true,
+    "onlyOnSequence": false
   },
   {
     "name": "stocksDay",
@@ -179,7 +192,8 @@
       "cars": 1
     },
     "next": null,
-    "acumulative": true
+    "acumulative": true,
+    "onlyOnSequence": false
   },
   {
     "name": "carsDay",
@@ -192,7 +206,8 @@
       "cars": 1.1
     },
     "next": null,
-    "acumulative": true
+    "acumulative": true,
+    "onlyOnSequence": false
   },
   {
     "name": "everytingDay",
@@ -205,7 +220,8 @@
       "cars": 1.1
     },
     "next": null,
-    "acumulative": true
+    "acumulative": true,
+    "onlyOnSequence": false
   },
   {
     "name": ".com bubble",
@@ -218,7 +234,8 @@
       "cars": 1.1
     },
     "next": "Prices return to normal",
-    "acumulative": true
+    "acumulative": true,
+    "onlyOnSequence": false
   },
   {
     "name": "Prices return to normal",
@@ -231,6 +248,7 @@
       "cars": 1
     },
     "next": null,
-    "acumulative": true
+    "acumulative": true,
+    "onlyOnSequence": true
   }
 ]
