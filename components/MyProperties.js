@@ -1,5 +1,5 @@
 // Imports from react native
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -16,20 +16,66 @@ import store from "../config/redux/store";
 
 // Local imports
 import colors from "../config/colors";
+import properties from "../config/properties";
+import { getData } from "../config/asyncStorage";
 
 // Assets
-import Bill from "../assets/img/bill-icon.png";
-import Bitcoin from "../assets/img/bitcoin-icon.png";
-import Briefcase from "../assets/img/briefcase-icon.png";
 
 export default MyProperties = () => {
   // Constants
   let colorScheme = useColorScheme();
   const [selectedTab, setSelectedTab] = useState("assets");
+  const [ownedProperties, setOwnedProperties] = useState([]);
+  const [assets, setAssets] = useState([]);
+  const [comodities, setComodities] = useState([]);
+  const [firstLoad, setFirtsLoad] = useState(true);
 
   // Functions
+  const propertyWName = (name) => {
+    for (let i = 0; i < properties.length; i++) {
+      if (properties[i].name === name) {
+        return properties[i];
+      }
+    }
+    return null;
+  };
 
-  // Animations on load
+  const setStates = (ownedProperties) => {
+    setOwnedProperties(ownedProperties);
+    let assets = [];
+    let comodities = [];
+    for (let i = 0; i < ownedProperties.length; i++) {
+      if (ownedProperties[i].isAnAsset) {
+        assets.push(ownedProperties[i]);
+      } else {
+        comodities.push(ownedProperties[i]);
+      }
+    }
+    setAssets(assets);
+    setComodities(comodities);
+  };
+
+  let currentState;
+  let newState;
+  store.subscribe(() => {
+    newState = store.getState().currentGame.ownedProperties;
+    if (currentState.length != newState.length) {
+      console.log("Owned properties changed");
+      console.log(newState);
+      console.log(currentState);
+      currentState = newState;
+      setStates(newState);
+    }
+  });
+
+  // On load
+  if (firstLoad) {
+    setFirtsLoad(false);
+    getData("currentGame", true).then((currentGame) => {
+      currentState = currentGame.ownedProperties;
+      setStates(currentState);
+    });
+  }
 
   // Render
   const render = () => {
@@ -72,26 +118,50 @@ export default MyProperties = () => {
         <View style={styles.assetsContentContainer}>
           <ScrollView horizontal={true}>
             <View style={styles.assetsItemsContainer}>
-              <TouchableOpacity>
-                <View style={styles.assetContainer}>
-                  <Image source={Briefcase} style={styles.assetsIcon} />
-                  <Text style={styles.assetName}>Salary</Text>
-                </View>
-              </TouchableOpacity>
-              <View style={styles.assetsSeparator} />
-              <TouchableOpacity>
-                <View style={styles.assetContainer}>
-                  <Image source={Bill} style={styles.assetsIcon} />
-                  <Text style={styles.assetName}>Savings</Text>
-                </View>
-              </TouchableOpacity>
-              <View style={styles.assetsSeparator} />
-              <TouchableOpacity>
-                <View style={styles.assetContainer}>
-                  <Image source={Bitcoin} style={styles.assetsIcon} />
-                  <Text style={styles.assetName}>Crypto</Text>
-                </View>
-              </TouchableOpacity>
+              {selectedTab === "assets"
+                ? assets.map((property) => (
+                    <View
+                      key={ownedProperties.indexOf(property)}
+                      style={styles.mappedProperty}
+                    >
+                      <TouchableOpacity>
+                        <View style={styles.assetContainer}>
+                          <Image
+                            source={propertyWName(property.name).img}
+                            style={styles.assetsIcon}
+                          />
+                          <Text style={styles.assetName}>{property.name}</Text>
+                        </View>
+                      </TouchableOpacity>
+                      {assets.indexOf(property) === assets.length - 1 ? (
+                        <></>
+                      ) : (
+                        <View style={styles.assetsSeparator} />
+                      )}
+                    </View>
+                  ))
+                : comodities.map((property) => (
+                    <View
+                      key={ownedProperties.indexOf(property)}
+                      style={styles.mappedProperty}
+                    >
+                      <TouchableOpacity>
+                        <View style={styles.assetContainer}>
+                          <Image
+                            source={propertyWName(property.name).img}
+                            style={styles.assetsIcon}
+                          />
+                          <Text style={styles.assetName}>{property.name}</Text>
+                        </View>
+                      </TouchableOpacity>
+                      {comodities.indexOf(property) ===
+                      comodities.length - 1 ? (
+                        <></>
+                      ) : (
+                        <View style={styles.assetsSeparator} />
+                      )}
+                    </View>
+                  ))}
             </View>
           </ScrollView>
         </View>
@@ -139,6 +209,11 @@ export default MyProperties = () => {
       backgroundColor: colors[colorScheme].separator,
       alignSelf: "center",
       marginHorizontal: 20,
+    },
+    mappedProperty: {
+      alignItems: "center",
+      flexDirection: "row",
+      height: "100%",
     },
     text: {
       color: colors[colorScheme].fonts.primary,
