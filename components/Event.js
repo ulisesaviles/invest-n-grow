@@ -74,9 +74,15 @@ export default Event = (props) => {
 
   return (
     <View style={styles.eventContainer}>
-      <Text style={[styles.text, styles.eventTitle]}>{currentEvent.title}</Text>
+      <Text style={[styles.text, styles.eventTitle]}>
+        {currentEvent !== undefined
+          ? currentEvent.title
+          : "There are no events"}
+      </Text>
       <Text style={[styles.text, styles.eventDescription]}>
-        {currentEvent.description}
+        {currentEvent !== undefined
+          ? currentEvent.description
+          : "Press 'Get new event!'"}
       </Text>
       <View style={styles.shadow}>
         <LinearGradient
@@ -108,7 +114,11 @@ export default Event = (props) => {
             <Text
               style={[{ color: colors.dark.fonts.primary }, styles.multiplier]}
             >
-              {`${currentEvent.multiplier.crypto}`}
+              {`${
+                currentEvent !== undefined
+                  ? currentEvent.multiplier.crypto
+                  : "-"
+              }`}
             </Text>
           </View>
           <View style={styles.multiplierContainer}>
@@ -123,7 +133,11 @@ export default Event = (props) => {
             <Text
               style={[{ color: colors.dark.fonts.primary }, styles.multiplier]}
             >
-              {`${currentEvent.multiplier.realEstate}`}
+              {`${
+                currentEvent !== undefined
+                  ? currentEvent.multiplier.realEstate
+                  : "-"
+              }`}
             </Text>
           </View>
           <View style={styles.multiplierContainer}>
@@ -138,7 +152,11 @@ export default Event = (props) => {
             <Text
               style={[{ color: colors.dark.fonts.primary }, styles.multiplier]}
             >
-              {`${currentEvent.multiplier.stocks}`}
+              {`${
+                currentEvent !== undefined
+                  ? currentEvent.multiplier.stocks
+                  : "-"
+              }`}
             </Text>
           </View>
         </LinearGradient>
