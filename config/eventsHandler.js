@@ -47,18 +47,27 @@ export const newEvent = () => {
       }
     }
     console.log(res);
-    return res;
+    return res + ownedPropertyWName("Cash").ammount;
   };
 
   const newValidEvent = () => {
     let randomIndex;
     while (true) {
       randomIndex = randomIndexInRange();
-      console.log(randomIndex);
       if (!events[randomIndex].onlyOnSequence) {
         return events[randomIndex];
       }
     }
+  };
+
+  const ownedPropertyWName = (name) => {
+    let properties = store.getState().currentGame.ownedProperties;
+    for (let i = 0; i < properties.length; i++) {
+      if (properties[i].name === name) {
+        return properties[i];
+      }
+    }
+    return null;
   };
 
   const propertyWName = (name) => {
@@ -74,13 +83,28 @@ export const newEvent = () => {
     return Math.floor(Math.random() * (events.length - 1));
   };
 
+  const updatedProperties = () => {
+    let ownedProperties = store.getState().currentGame.ownedProperties;
+    for (let i = 0; i < ownedProperties.length; i++) {
+      if (ownedProperties[i].name === "Cash") {
+        ownedProperties[i] = {
+          name: "Cash",
+          isAnAsset: true,
+          ammount: getCashFlow(),
+        };
+      }
+    }
+    return ownedProperties;
+  };
+
   const currentState = store.getState();
+  // console.log(updatedProperties());
   if (currentState.currentGame.passedEvents.length === 0) {
     store.dispatch({
       type: "newEvent",
       payload: {
         newEvent: newValidEvent(),
-        cashFlow: getCashFlow(),
+        updatedProperties: updatedProperties(),
       },
     });
   } else {
@@ -89,7 +113,7 @@ export const newEvent = () => {
         type: "newEvent",
         payload: {
           newEvent: newValidEvent(),
-          cashFlow: getCashFlow(),
+          updatedProperties: updatedProperties(),
         },
       });
     } else {
@@ -97,7 +121,7 @@ export const newEvent = () => {
         type: "newEvent",
         payload: {
           newEvent: eventWName(currentState.currentGame.passedEvents[0].next),
-          cashFlow: getCashFlow(),
+          updatedProperties: updatedProperties(),
         },
       });
     }

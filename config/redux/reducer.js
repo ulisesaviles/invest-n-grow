@@ -1,43 +1,11 @@
+import defaultValues from "../defaultValues";
+
 const initialState = {
   popupStates: {
     store: false,
     events: false,
   },
-  currentGame: {
-    multipliers: {
-      realEstate: 1,
-      crypto: 1,
-      cash: 1,
-      cars: 1,
-      stocks: 1,
-    },
-    ownedProperties: [
-      {
-        name: "Cheap Car",
-        isAnAsset: false,
-        ammount: 1,
-        pricePaid: 5000,
-      },
-      {
-        name: "Cash",
-        isAnAsset: true,
-        ammount: 5000,
-      },
-      {
-        name: "Small House",
-        isAnAsset: false,
-        ammount: 1,
-        pricePaid: 200000,
-      },
-      {
-        name: "Salary",
-        isAnAsset: true,
-        ammount: 1,
-      },
-    ],
-    debt: 0,
-    passedEvents: [],
-  },
+  currentGame: defaultValues,
 };
 
 export default Reducer = (state = initialState, action) => {
@@ -63,13 +31,11 @@ export default Reducer = (state = initialState, action) => {
       },
     };
   } else if (action.type === "newEvent") {
-    console.log(
-      `Store>>>\nNewEvent: ${JSON.stringify(action.payload.newEvent)}`
-    );
     return {
       ...state,
       currentGame: {
         ...state.currentGame,
+        ownedProperties: action.payload.updatedProperties,
         multipliers: {
           realEstate:
             state.currentGame.multipliers.realEstate *
@@ -91,6 +57,8 @@ export default Reducer = (state = initialState, action) => {
         ),
       },
     };
+  } else if (action.type === "reset") {
+    return initialState;
   }
   return state;
 };
