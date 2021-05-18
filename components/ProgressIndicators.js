@@ -11,6 +11,9 @@ import { LinearGradient } from "expo-linear-gradient";
 
 // Local imports
 import colors from "../config/colors";
+import { priceToStr } from "../config/formatter";
+import { getData } from "../config/asyncStorage";
+import properties from "../config/properties";
 
 export default ProgressIndicator = () => {
   // Constants
@@ -21,6 +24,51 @@ export default ProgressIndicator = () => {
     lifeQuality: useRef(new Animated.Value(0)).current,
     herritage: useRef(new Animated.Value(0)).current,
     debt: useRef(new Animated.Value(0)).current,
+  };
+
+  const calculateLifeQuality = (properties) => {
+    let res = 0;
+    for (let i = 0; i < properties.length; i++) {
+      res += propertyWName(properties[i].name).stats[
+        properties[i].isAnAsset ? "asset" : "commodity"
+      ].lifeQuality;
+    }
+    return res > 0 ? res : 0;
+  };
+
+  const calculateHerritage = (properties, multipliers) => {
+    let res = 0;
+    let tempPoperty;
+    for (let i = 0; i < properties.length; i++) {
+      tempPoperty = propertyWName(properties[i].name);
+      if (
+        tempPoperty.type === "cars" ||
+        tempPoperty.type === "cash" ||
+        tempPoperty.type === "crypto" ||
+        tempPoperty.type === "realEstate" ||
+        tempPoperty.type === "stocks"
+      )
+        res +=
+          tempPoperty.value *
+          multipliers[tempPoperty.type] *
+          properties[i].ammount;
+    }
+    return res;
+  };
+
+  const propertyWName = (name) => {
+    for (let i = 0; i < properties.length; i++) {
+      if (properties[i].name === name) {
+        return properties[i];
+      }
+    }
+    return null;
+  };
+
+  const limits = {
+    lifeQuality: 100,
+    herritage: 10000000,
+    debt: 10000000,
   };
 
   // Functions
@@ -35,11 +83,29 @@ export default ProgressIndicator = () => {
   // Animations on load
   if (firstload) {
     setFirtsLoad(false);
+    let currentGame = store.getState().currentGame;
     setTimeout(() => {
-      updateIndicators("lifeQuality", 80);
-      updateIndicators("herritage", 50);
-      updateIndicators("debt", 70);
+      updateIndicators(
+        "lifeQuality",
+        (calculateLifeQuality(currentGame.ownedProperties) /
+          limits.lifeQuality) *
+          100
+      );
+      updateIndicators(
+        "herritage",
+        (calculateHerritage(
+          currentGame.ownedProperties,
+          currentGame.multipliers
+        ) /
+          limits.herritage) *
+          100
+      );
+      updateIndicators("debt", (currentGame.debt / limits.debt) * 100);
     }, 300);
+
+    store.subscribe(() => {
+      // if(newState.debt != )
+    });
   }
 
   // Render
@@ -52,7 +118,9 @@ export default ProgressIndicator = () => {
               <Text style={[styles.progressText, { fontWeight: "700" }]}>
                 Life Quality
               </Text>
-              <Text style={styles.progressText}>100pts</Text>
+              <Text style={styles.progressText}>{`${priceToStr(
+                limits.lifeQuality
+              )}pts`}</Text>
             </View>
             <View style={styles.progressBarContainer}>
               <Animated.View
@@ -77,7 +145,9 @@ export default ProgressIndicator = () => {
               <Text style={[styles.progressText, { fontWeight: "700" }]}>
                 Herritage
               </Text>
-              <Text style={styles.progressText}>$10M</Text>
+              <Text style={styles.progressText}>{`$${priceToStr(
+                limits.herritage
+              )}`}</Text>
             </View>
             <View style={styles.progressBarContainer}>
               <Animated.View
@@ -102,7 +172,9 @@ export default ProgressIndicator = () => {
               <Text style={[styles.progressText, { fontWeight: "700" }]}>
                 Debt
               </Text>
-              <Text style={styles.progressText}>$10M</Text>
+              <Text style={styles.progressText}>{`$${priceToStr(
+                limits.debt
+              )}`}</Text>
             </View>
             <View style={styles.progressBarContainer}>
               <Animated.View
