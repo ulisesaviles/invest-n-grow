@@ -57,7 +57,7 @@ export default properties = [
       },
       commodity: {
         cashFlow: -100,
-        lifeQuality: 0,
+        lifeQuality: 10,
       },
     },
   },
@@ -117,7 +117,7 @@ export default properties = [
     stats: {
       asset: {
         cashFlow: 4000,
-        lifeQuality: -50,
+        lifeQuality: -35,
       },
     },
   },
@@ -145,7 +145,7 @@ export default properties = [
     stats: {
       asset: {
         cashFlow: 10000,
-        lifeQuality: -10,
+        lifeQuality: 0,
       },
     },
   },
@@ -153,15 +153,15 @@ export default properties = [
     name: "Cheap Car",
     img: cheapCar,
     value: 5000,
-    type: "car",
+    type: "cars",
     stats: {
       asset: {
         cashFlow: 400,
         lifeQuality: 0,
       },
       commodity: {
-        cashFlow: -200,
-        lifeQuality: -10,
+        cashFlow: -100,
+        lifeQuality: 5,
       },
     },
   },
@@ -169,7 +169,7 @@ export default properties = [
     name: "Cybertruck",
     img: cybertruck,
     value: 40000,
-    type: "car",
+    type: "cars",
     stats: {
       asset: {
         cashFlow: 4000,
@@ -177,7 +177,7 @@ export default properties = [
       },
       commodity: {
         cashFlow: -200,
-        lifeQuality: -10,
+        lifeQuality: 20,
       },
     },
   },
@@ -185,15 +185,15 @@ export default properties = [
     name: "Luxurious Car",
     img: luxuryCar,
     value: 200000,
-    type: "car",
+    type: "cars",
     stats: {
       asset: {
         cashFlow: 10000,
         lifeQuality: 0,
       },
       commodity: {
-        cashFlow: -200,
-        lifeQuality: -10,
+        cashFlow: -1000,
+        lifeQuality: 30,
       },
     },
   },
