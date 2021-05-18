@@ -55,25 +55,19 @@ export default MyProperties = () => {
     setComodities(comodities);
   };
 
-  let currentState;
   let newState;
-  store.subscribe(() => {
-    newState = store.getState().currentGame.ownedProperties;
-    if (currentState.length != newState.length) {
-      console.log("Owned properties changed");
-      console.log(newState);
-      console.log(currentState);
-      currentState = newState;
-      setStates(newState);
-    }
-  });
 
   // On load
   if (firstLoad) {
     setFirtsLoad(false);
     getData("currentGame", true).then((currentGame) => {
-      currentState = currentGame.ownedProperties;
-      setStates(currentState);
+      setStates(currentGame.ownedProperties);
+    });
+    store.subscribe(() => {
+      newState = store.getState().currentGame.ownedProperties;
+      if (ownedProperties.length !== newState.length) {
+        setStates(newState);
+      }
     });
   }
 
@@ -178,6 +172,9 @@ export default MyProperties = () => {
     assetName: {
       color: colors[colorScheme].fonts.primary,
       fontWeight: "500",
+      width: 60,
+      textAlign: "center",
+      alignSelf: "center",
     },
     assetsContentContainer: {
       width: "95%",
