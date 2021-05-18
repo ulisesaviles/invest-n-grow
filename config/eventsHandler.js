@@ -23,7 +23,7 @@ export const getEvent = () => {
   };
 
   const randomIndexInRange = () => {
-    return Math.round(Math.random() * events.length - 1);
+    return Math.floor(Math.random() * events.length - 1);
   };
 
   const currentState = store.getState();
