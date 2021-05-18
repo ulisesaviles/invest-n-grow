@@ -70,6 +70,21 @@ export default Reducer = (state = initialState, action) => {
       ...state,
       currentGame: {
         ...state.currentGame,
+        multipliers: {
+          realEstate:
+            state.currentGame.multipliers.realEstate *
+            action.payload.newEvent.multiplier.realEstate,
+          crypto:
+            state.currentGame.multipliers.crypto *
+            action.payload.newEvent.multiplier.crypto,
+          cash: state.currentGame.multipliers.cash,
+          cars:
+            state.currentGame.multipliers.cars *
+            action.payload.newEvent.multiplier.cars,
+          stocks:
+            state.currentGame.multipliers.stocks *
+            action.payload.newEvent.multiplier.stocks,
+        },
         passedEvents: [].concat(
           action.payload.newEvent,
           ...state.currentGame.passedEvents
