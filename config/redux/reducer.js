@@ -29,7 +29,13 @@ const initialState = {
         ammount: 1,
         pricePaid: 200000,
       },
+      {
+        name: "Salary",
+        isAnAsset: true,
+        ammount: 1,
+      },
     ],
+    debt: 0,
     passedEvents: [],
   },
 };
