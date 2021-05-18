@@ -49,8 +49,14 @@ export default Root = () => {
                 ammount: 1,
                 pricePaid: 200000,
               },
+              {
+                name: "Salary",
+                isAnAsset: true,
+                ammount: 1,
+              },
             ],
             passedEvents: [],
+            debt: 0,
           },
           true
         );
