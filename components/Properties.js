@@ -18,9 +18,6 @@ import poorHouse from "../assets/img/poorHouse.png";
 import { Entypo } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 
-import store from "../config/redux/store";
-import { getEvent } from "../config/eventsHandler";
-
 export default Properties = () => {
   let colorScheme = useColorScheme();
   const [property, setProperty] = useState(richHouse);
@@ -46,8 +43,7 @@ export default Properties = () => {
 
   const propertyNav = (direction) => {
     translateProperty(direction == "left" ? "right" : "left", 200);
-    getEvent();
-    console.log(store.getState());
+
     // Change the property
     setTimeout(() => {
       setHideProperty(true);
