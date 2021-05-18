@@ -19,7 +19,7 @@
     "description": "Due to the coronavirus, the world's economy is passing throug the worst crisis since 1929. The U. S. A. government gave away incentives to people and invested in the stock market to counter it.",
     "multiplier": {
       "crypto": 5,
-      "realEstate": 1,
+      "realEstate": 1.5,
       "stocks": 2,
       "cars": 1
     },
@@ -47,9 +47,9 @@
     "description": "The new cabinet has everything under control. The economy's growth returns to normal.",
     "multiplier": {
       "crypto": 1.1,
-      "realEstate": 1.1,
-      "stocks": 1.1,
-      "cars": 1.1
+      "realEstate": 1.2,
+      "stocks": 1.3,
+      "cars": 1.2
     },
     "next": "The government stabilizes",
     "acumulative": true,
