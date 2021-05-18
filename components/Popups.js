@@ -22,10 +22,9 @@ import { Entypo } from "@expo/vector-icons";
 
 // Local imports
 import colors from "../config/colors";
-import events from "../config/events.json";
 import properties from "../config/properties";
 import { priceToStr } from "../config/formatter";
-import { getEvent } from "../config/eventsHandler";
+import { newEvent } from "../config/eventsHandler";
 import { getData, storeData } from "../config/asyncStorage";
 
 export default Popups = () => {
@@ -68,19 +67,17 @@ export default Popups = () => {
     }
   };
 
-  console.log(store.getState().currentGame.multipliers);
   const handleNewEvent = async () => {
-    getEvent();
+    newEvent();
     let currentGame = store.getState().currentGame;
-    setCurrentGameEvents(currentGame.passedEvents);
     await storeData("currentGame", currentGame, true);
     translateEvent("right", 150);
     setTimeout(() => {
+      setCurrentGameEvents(currentGame.passedEvents);
       setCurrentEventIndex(0);
       translateEvent("left", 0);
       translateEvent("center", 150);
     }, 150);
-    console.log(store.getState());
   };
 
   const handlePopup = (open, name) => {
@@ -158,8 +155,6 @@ export default Popups = () => {
       }
     });
   }
-
-  console.log(currentGameEvents);
 
   // Render
   const render = () => {
@@ -491,7 +486,7 @@ export default Popups = () => {
                         style={styles.getNewEventBtn}
                         onPress={handleNewEvent}
                       >
-                        <Text style={styles.getNewEvent}>Get new event!</Text>
+                        <Text style={styles.getNewEvent}>Next month</Text>
                       </TouchableOpacity>
                     </LinearGradient>
                     {currentGameEvents.length > 0 ? (
