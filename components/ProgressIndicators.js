@@ -104,7 +104,23 @@ export default ProgressIndicator = () => {
     }, 300);
 
     store.subscribe(() => {
-      // if(newState.debt != )
+      let currentGame = store.getState().currentGame;
+      updateIndicators(
+        "lifeQuality",
+        (calculateLifeQuality(currentGame.ownedProperties) /
+          limits.lifeQuality) *
+          100
+      );
+      updateIndicators(
+        "herritage",
+        (calculateHerritage(
+          currentGame.ownedProperties,
+          currentGame.multipliers
+        ) /
+          limits.herritage) *
+          100
+      );
+      updateIndicators("debt", (currentGame.debt / limits.debt) * 100);
     });
   }
 
