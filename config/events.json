@@ -172,7 +172,7 @@
     "title": "Nothing relevant happened",
     "description": "Just another month being rich. ",
     "multiplier": {
-      "crypto": 1,
+      "crypto": 0.9,
       "realEstate": 1.1,
       "stocks": 1,
       "cars": 1
@@ -186,7 +186,7 @@
     "title": "Nothing relevant happened",
     "description": "Just another month being rich. ",
     "multiplier": {
-      "crypto": 1,
+      "crypto": 0.9,
       "realEstate": 1,
       "stocks": 1.1,
       "cars": 1
@@ -200,7 +200,7 @@
     "title": "Nothing relevant happened",
     "description": "Just another month being rich. ",
     "multiplier": {
-      "crypto": 1,
+      "crypto": 0.9,
       "realEstate": 1,
       "stocks": 1,
       "cars": 1.1
@@ -214,7 +214,7 @@
     "title": "Nothing relevant happened",
     "description": "Just another month being rich. ",
     "multiplier": {
-      "crypto": 1.1,
+      "crypto": 0.9,
       "realEstate": 1.1,
       "stocks": 1.1,
       "cars": 1.1
