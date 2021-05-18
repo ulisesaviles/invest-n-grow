@@ -26,6 +26,7 @@ import events from "../config/events.json";
 import properties from "../config/properties";
 import { priceToStr } from "../config/formatter";
 import { getEvent } from "../config/eventsHandler";
+import { getData, storeData } from "../config/asyncStorage";
 
 export default Popups = () => {
   // Constants
@@ -34,6 +35,7 @@ export default Popups = () => {
   const [eventsIsActive, setEventsIsActive] = useState(false);
   const [storeActiveItem, setStoreActiveItem] = useState(null);
   const [firstLoad, setFirtsLoad] = useState(true);
+  const [currentGameEvents, setCurrentGameEvents] = useState([]);
 
   const animatedValues = {
     popUpBackground: useRef(new Animated.Value(0)).current,
@@ -53,7 +55,10 @@ export default Popups = () => {
         translateEvent("left", 0);
         translateEvent("center", 150);
       }, 150);
-    } else if (direction == "right" && currentEventIndex != events.length - 1) {
+    } else if (
+      direction == "right" &&
+      currentEventIndex != currentGameEvents.length - 1
+    ) {
       translateEvent("left", 150);
       setTimeout(() => {
         setCurrentEventIndex(currentEventIndex + 1);
@@ -61,6 +66,21 @@ export default Popups = () => {
         translateEvent("center", 150);
       }, 150);
     }
+  };
+
+  console.log(store.getState().currentGame.multipliers);
+  const handleNewEvent = async () => {
+    getEvent();
+    let currentGame = store.getState().currentGame;
+    setCurrentGameEvents(currentGame.passedEvents);
+    await storeData("currentGame", currentGame, true);
+    translateEvent("right", 150);
+    setTimeout(() => {
+      setCurrentEventIndex(0);
+      translateEvent("left", 0);
+      translateEvent("center", 150);
+    }, 150);
+    console.log(store.getState());
   };
 
   const handlePopup = (open, name) => {
@@ -121,6 +141,9 @@ export default Popups = () => {
     setFirtsLoad(false);
     let newState;
     let currentState;
+    getData("currentGame", true).then((currentGame) =>
+      setCurrentGameEvents(currentGame.passedEvents)
+    );
     store.subscribe(() => {
       newState = store.getState();
       if (
@@ -135,6 +158,8 @@ export default Popups = () => {
       }
     });
   }
+
+  console.log(currentGameEvents);
 
   // Render
   const render = () => {
@@ -450,44 +475,68 @@ export default Popups = () => {
                       flexDirection: "row",
                     }}
                   >
-                    <Event event={events[currentEventIndex]} />
+                    <Event event={currentGameEvents[currentEventIndex]} />
                   </Animated.View>
-                  <View style={styles.eventsNavContainer}>
-                    <TouchableOpacity
-                      style={styles.eventsNavArrowContainer}
-                      onPress={() => {
-                        eventNavigation("left");
-                      }}
+                  <View>
+                    <LinearGradient
+                      colors={[
+                        colors[colorScheme].gradients.green.start,
+                        colors[colorScheme].gradients.green.end,
+                      ]}
+                      style={styles.getNewEventBtnContainer}
+                      start={{ x: 0, y: 0 }}
+                      end={{ x: 1, y: 1 }}
                     >
-                      <Entypo
-                        name="chevron-small-left"
-                        size={30}
-                        color={
-                          currentEventIndex == 0
-                            ? colors[colorScheme].containers
-                            : colors[colorScheme].fonts.primary
-                        }
-                      />
-                    </TouchableOpacity>
-                    <Text style={[styles.text, styles.eventsNavFrom]}>
-                      {`${currentEventIndex + 1} from ${events.length}`}
-                    </Text>
-                    <TouchableOpacity
-                      style={styles.eventsNavArrowContainer}
-                      onPress={() => {
-                        eventNavigation("right");
-                      }}
-                    >
-                      <Entypo
-                        name="chevron-small-right"
-                        size={30}
-                        color={
-                          currentEventIndex + 1 == events.length
-                            ? colors[colorScheme].containers
-                            : colors[colorScheme].fonts.primary
-                        }
-                      />
-                    </TouchableOpacity>
+                      <TouchableOpacity
+                        style={styles.getNewEventBtn}
+                        onPress={handleNewEvent}
+                      >
+                        <Text style={styles.getNewEvent}>Get new event!</Text>
+                      </TouchableOpacity>
+                    </LinearGradient>
+                    {currentGameEvents.length > 0 ? (
+                      <View style={styles.eventsNavContainer}>
+                        <TouchableOpacity
+                          style={styles.eventsNavArrowContainer}
+                          onPress={() => {
+                            eventNavigation("left");
+                          }}
+                        >
+                          <Entypo
+                            name="chevron-small-left"
+                            size={30}
+                            color={
+                              currentEventIndex == 0
+                                ? colors[colorScheme].containers
+                                : colors[colorScheme].fonts.primary
+                            }
+                          />
+                        </TouchableOpacity>
+                        <Text style={[styles.text, styles.eventsNavFrom]}>
+                          {`${currentEventIndex + 1} from ${
+                            currentGameEvents.length
+                          }`}
+                        </Text>
+                        <TouchableOpacity
+                          style={styles.eventsNavArrowContainer}
+                          onPress={() => {
+                            eventNavigation("right");
+                          }}
+                        >
+                          <Entypo
+                            name="chevron-small-right"
+                            size={30}
+                            color={
+                              currentEventIndex + 1 == currentGameEvents.length
+                                ? colors[colorScheme].containers
+                                : colors[colorScheme].fonts.primary
+                            }
+                          />
+                        </TouchableOpacity>
+                      </View>
+                    ) : (
+                      <></>
+                    )}
                   </View>
                 </View>
               ) : (
@@ -537,6 +586,27 @@ export default Popups = () => {
       alignItems: "center",
       alignSelf: "center",
       marginTop: 20,
+    },
+    getNewEvent: {
+      color: "rgb(255,255,255)",
+      fontWeight: "700",
+      fontSize: 18,
+      width: "100%",
+      height: "100%",
+      textAlign: "center",
+      alignSelf: "center",
+    },
+    getNewEventBtn: {
+      width: "100%",
+      height: 18,
+    },
+    getNewEventBtnContainer: {
+      height: 30,
+      width: "50%",
+      alignSelf: "center",
+      alignItems: "center",
+      justifyContent: "center",
+      borderRadius: 10,
     },
     popUpContainer: {
       backgroundColor: colors[colorScheme].containers,
