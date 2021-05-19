@@ -49,18 +49,34 @@ export default Store = () => {
     );
     const propertyObj = {
       ammount: 1,
-      isAnAsset: false,
+      isAnAsset: property.stats.commodity === undefined,
       name: property.name,
       pricePaid: property.value * multiplier,
     };
     // Pay for it with cash and debt.
+    let cashAvailable = ownedPropertyWName("Cash").ammount;
+    console.log(`I have ${cashAvailable} cash available`);
+    console.log(`The property's value is: ${property.value * multiplier}`);
+    console.log(
+      property.value * multiplier > cashAvailable
+        ? `Debt: ${property.value * multiplier - cashAvailable}`
+        : `Cash after purchase: ${cashAvailable - property.value * multiplier}`
+    );
     store.dispatch({
       type: "buyProperty",
-      payload: {
-        newProperty: propertyObj,
-      },
+      payload: purchaseReducerPayload(property, multiplier),
     });
     storeData("currentGame", store.getState().currentGame, true);
+  };
+
+  const ownedPropertyWName = (name, wantsIndex = false) => {
+    let properties = store.getState().currentGame.ownedProperties;
+    for (let i = 0; i < properties.length; i++) {
+      if (properties[i].name === name) {
+        return wantsIndex ? i : properties[i];
+      }
+    }
+    return null;
   };
 
   const translateStore = (direction, duration = 200) => {
@@ -71,14 +87,44 @@ export default Store = () => {
     }).start();
   };
 
+  const purchaseReducerPayload = (propertyToPurchase, multiplier) => {
+    let cashProperty = ownedPropertyWName("Cash");
+    let properties = store.getState().currentGame.ownedProperties;
+    cashProperty.ammount =
+      propertyToPurchase.value * multiplier > cashProperty.ammount
+        ? 0
+        : cashProperty.ammount - propertyToPurchase.value * multiplier;
+    properties[ownedPropertyWName("Cash", true)] = cashProperty;
+    properties = [
+      ...properties,
+      {
+        ammount: 1,
+        isAnAsset: propertyToPurchase.stats.commodity === undefined,
+        name: propertyToPurchase.name,
+        pricePaid: propertyToPurchase.value * multiplier,
+      },
+    ];
+    return {
+      updatedProperties: properties,
+      debt:
+        properties[ownedPropertyWName("Cash", true)].ammount > 0
+          ? 0
+          : propertyToPurchase.value * multiplier - cashProperty.ammount,
+    };
+  };
+
   if (firstLoad) {
     setFirtsLoad(false);
     let newState;
     setMultipliers(store.getState().currentGame.multipliers);
     store.subscribe(() => {
-      newState = store.getState().currentGame.multipliers;
-      //console.log(newState);
-      setMultipliers(newState);
+      try {
+        newState = store.getState().currentGame.multipliers;
+        //console.log(newState);
+        setMultipliers(newState);
+      } catch (e) {
+        console.log(e);
+      }
     });
   }
 
