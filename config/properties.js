@@ -71,10 +71,6 @@ export default properties = [
         cashFlow: 0,
         lifeQuality: 0,
       },
-      commodity: {
-        cashFlow: 0,
-        lifeQuality: 0,
-      },
     },
   },
   {
