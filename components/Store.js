@@ -30,12 +30,39 @@ export default Store = () => {
   let colorScheme = useColorScheme();
   const [storeActiveItem, setStoreActiveItem] = useState(null);
   const [firstLoad, setFirtsLoad] = useState(true);
+  const [multipliers, setMultipliers] = useState({
+    realEstate: 1,
+    crypto: 1,
+    cash: 1,
+    cars: 1,
+    stocks: 1,
+  });
 
   const animatedValues = {
     storeTranslation: useRef(new Animated.Value(0)).current,
   };
 
   // Functions
+  const handlePurchase = (property, multiplier) => {
+    console.log(
+      `I will purchase ${property.name} at ${property.value * multiplier}`
+    );
+    const propertyObj = {
+      ammount: 1,
+      isAnAsset: false,
+      name: property.name,
+      pricePaid: property.value * multiplier,
+    };
+    // Pay for it with cash and debt.
+    store.dispatch({
+      type: "buyProperty",
+      payload: {
+        newProperty: propertyObj,
+      },
+    });
+    storeData("currentGame", store.getState().currentGame, true);
+  };
+
   const translateStore = (direction, duration = 200) => {
     Animated.timing(animatedValues.storeTranslation, {
       toValue: direction == "left" ? -0.9 * Dimensions.get("screen").width : 0,
@@ -47,11 +74,11 @@ export default Store = () => {
   if (firstLoad) {
     setFirtsLoad(false);
     let newState;
-    getData("currentGame", true).then((currentGame) => {
-      // setCurrentGameEvents(currentGame.passedEvents)
-    });
+    setMultipliers(store.getState().currentGame.multipliers);
     store.subscribe(() => {
-      newState = store.getState();
+      newState = store.getState().currentGame.multipliers;
+      //console.log(newState);
+      setMultipliers(newState);
     });
   }
 
@@ -66,11 +93,19 @@ export default Store = () => {
           },
         ]}
       >
-        <ScrollView style={{ width: "50%", height: "52%" }}>
+        <ScrollView style={{ width: "50%", height: "62%" }}>
           <View style={styles.storeContainer}>
             {properties.map((property) => (
               <View
-                style={styles.storePropertyContainer}
+                style={[
+                  styles.storePropertyContainer,
+                  {
+                    display:
+                      property.name !== "Cash" && property.name !== "Salary"
+                        ? "flex"
+                        : "none",
+                  },
+                ]}
                 key={properties.indexOf(property)}
               >
                 <TouchableOpacity
@@ -85,7 +120,17 @@ export default Store = () => {
                     style={styles.storePropertyImg}
                   />
                   <Text style={styles.storePropertyPrice}>
-                    {`$ ${priceToStr(property.value)} dlls`}
+                    {`$ ${priceToStr(
+                      property.type === "realEstate" ||
+                        property.type === "crypto" ||
+                        property.type === "cash" ||
+                        property.type === "cars" ||
+                        property.type === "stocks"
+                        ? Math.round(
+                            property.value * multipliers[property.type]
+                          )
+                        : property.value
+                    )} dlls`}
                   </Text>
                 </TouchableOpacity>
               </View>
@@ -165,7 +210,12 @@ export default Store = () => {
                                 ? "+"
                                 : ""
                             }$${priceToStr(
-                              storeActiveItem.stats.commodity.cashFlow
+                              Math.abs(
+                                Math.round(
+                                  storeActiveItem.stats.commodity.cashFlow *
+                                    multipliers[storeActiveItem.type]
+                                )
+                              )
                             )}`}
                           </Text>
                         </View>
@@ -195,7 +245,12 @@ export default Store = () => {
                                 ? "+"
                                 : ""
                             }$${priceToStr(
-                              storeActiveItem.stats.asset.cashFlow
+                              Math.abs(
+                                Math.round(
+                                  storeActiveItem.stats.asset.cashFlow *
+                                    multipliers[storeActiveItem.type]
+                                )
+                              )
                             )}`}
                           </Text>
                         </View>
@@ -213,9 +268,31 @@ export default Store = () => {
                     start={{ x: 0, y: 0 }}
                     end={{ x: 1, y: 1 }}
                   >
-                    <TouchableOpacity>
-                      <Text style={styles.storeBuy}>{`Buy at $${priceToStr(
-                        storeActiveItem.value
+                    <TouchableOpacity
+                      onPress={() => {
+                        handlePurchase(
+                          storeActiveItem,
+                          storeActiveItem.type === "realEstate" ||
+                            storeActiveItem.type === "crypto" ||
+                            storeActiveItem.type === "cash" ||
+                            storeActiveItem.type === "cars" ||
+                            storeActiveItem.type === "stocks"
+                            ? multipliers[storeActiveItem.type]
+                            : 1
+                        );
+                      }}
+                    >
+                      <Text style={styles.storeBuy}>{`Buy at $ ${priceToStr(
+                        storeActiveItem.type === "realEstate" ||
+                          storeActiveItem.type === "crypto" ||
+                          storeActiveItem.type === "cash" ||
+                          storeActiveItem.type === "cars" ||
+                          storeActiveItem.type === "stocks"
+                          ? Math.round(
+                              storeActiveItem.value *
+                                multipliers[storeActiveItem.type]
+                            )
+                          : storeActiveItem.value
                       )}`}</Text>
                     </TouchableOpacity>
                   </LinearGradient>
