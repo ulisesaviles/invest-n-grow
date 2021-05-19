@@ -42,8 +42,10 @@ export default MyProperties = () => {
 
   const setStates = (ownedProperties) => {
     setOwnedProperties(ownedProperties);
-    let assets = [];
-    let comodities = [];
+    let assets;
+    let comodities;
+    assets = [];
+    comodities = [];
     for (let i = 0; i < ownedProperties.length; i++) {
       if (ownedProperties[i].isAnAsset) {
         assets.push(ownedProperties[i]);
