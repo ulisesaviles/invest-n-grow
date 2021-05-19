@@ -24,10 +24,8 @@ export default Reducer = (state = initialState, action) => {
       ...state,
       currentGame: {
         ...state.currentGame,
-        ownedProperties: [
-          action.payload.newProperty,
-          ...state.currentGame.ownedProperties,
-        ],
+        ownedProperties: action.payload.updatedProperties,
+        debt: state.currentGame.debt + action.payload.debt,
       },
     };
   } else if (action.type === "newEvent") {
