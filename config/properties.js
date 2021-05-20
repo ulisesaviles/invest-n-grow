@@ -11,6 +11,7 @@ import cybertruck from "../assets/img/cybertruck.png";
 import luxuryDepartment from "../assets/img/luxuriousDepartment.png";
 import smallBusiness from "../assets/img/smallBusiness.png";
 import smallDepartment from "../assets/img/smallDepartment.png";
+import stocks from "../assets/img/stocks.png";
 
 export default properties = [
   {
@@ -190,6 +191,18 @@ export default properties = [
       commodity: {
         cashFlow: -1000,
         lifeQuality: 30,
+      },
+    },
+  },
+  {
+    name: "S&P 500",
+    img: stocks,
+    value: 300,
+    type: "stocks",
+    stats: {
+      asset: {
+        cashFlow: 3,
+        lifeQuality: 0,
       },
     },
   },
