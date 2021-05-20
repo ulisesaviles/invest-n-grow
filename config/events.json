@@ -172,7 +172,7 @@
     "title": "Nothing relevant happened",
     "description": "Just another month being rich. ",
     "multiplier": {
-      "crypto": 0.9,
+      "crypto": 1,
       "realEstate": 1.1,
       "stocks": 1,
       "cars": 1
@@ -186,7 +186,7 @@
     "title": "Nothing relevant happened",
     "description": "Just another month being rich. ",
     "multiplier": {
-      "crypto": 0.9,
+      "crypto": 1,
       "realEstate": 1,
       "stocks": 1.1,
       "cars": 1
@@ -200,7 +200,7 @@
     "title": "Nothing relevant happened",
     "description": "Just another month being rich. ",
     "multiplier": {
-      "crypto": 0.9,
+      "crypto": 1,
       "realEstate": 1,
       "stocks": 1,
       "cars": 1.1
@@ -214,7 +214,7 @@
     "title": "Nothing relevant happened",
     "description": "Just another month being rich. ",
     "multiplier": {
-      "crypto": 0.9,
+      "crypto": 1.1,
       "realEstate": 1.1,
       "stocks": 1.1,
       "cars": 1.1
@@ -242,7 +242,7 @@
     "title": "Prices return to normal",
     "description": "After the .com bubble, the companies that survived's stock price is now their real value",
     "multiplier": {
-      "crypto": 1.8,
+      "crypto": 2,
       "realEstate": 1,
       "stocks": 2,
       "cars": 1
