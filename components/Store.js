@@ -47,12 +47,6 @@ export default Store = () => {
     console.log(
       `I will purchase ${property.name} at ${property.value * multiplier}`
     );
-    const propertyObj = {
-      ammount: 1,
-      isAnAsset: property.stats.commodity === undefined,
-      name: property.name,
-      pricePaid: property.value * multiplier,
-    };
     // Pay for it with cash and debt.
     let cashAvailable = ownedPropertyWName("Cash").ammount;
     console.log(`I have ${cashAvailable} cash available`);
@@ -120,7 +114,6 @@ export default Store = () => {
     store.subscribe(() => {
       try {
         newState = store.getState().currentGame.multipliers;
-        //console.log(newState);
         setMultipliers(newState);
       } catch (e) {
         console.log(e);
@@ -139,7 +132,7 @@ export default Store = () => {
           },
         ]}
       >
-        <ScrollView style={{ width: "50%", height: "62%" }}>
+        <ScrollView style={{ width: "50%", height: "52%" }}>
           <View style={styles.storeContainer}>
             {properties.map((property) => (
               <View
@@ -229,7 +222,8 @@ export default Store = () => {
                     <Text style={[styles.storeStatsTitle, styles.text]}>
                       Stats
                     </Text>
-                    {storeActiveItem.type == "realEstate" ? (
+                    {storeActiveItem.type == "realEstate" ||
+                    storeActiveItem.type == "cars" ? (
                       <>
                         <Text style={[styles.storeStatsStubtitle, styles.text]}>
                           As a commodity:
@@ -265,45 +259,44 @@ export default Store = () => {
                             )}`}
                           </Text>
                         </View>
-                        <View style={styles.storeStatsSeparator} />
-                        <Text style={[styles.storeStatsStubtitle, styles.text]}>
-                          As an asset:
-                        </Text>
-                        <View style={styles.storeStatsLine}>
-                          <Text style={[styles.storeStatName, styles.text]}>
-                            Life Quality:
-                          </Text>
-                          <Text style={[styles.text]}>
-                            {`${
-                              storeActiveItem.stats.asset.lifeQuality > 0
-                                ? "+"
-                                : ""
-                            }${storeActiveItem.stats.asset.lifeQuality}pts`}
-                          </Text>
-                        </View>
-                        <View style={styles.storeStatsLine}>
-                          <Text style={[styles.storeStatName, styles.text]}>
-                            Cash flow:
-                          </Text>
-                          <Text style={[styles.text]}>
-                            {`${
-                              storeActiveItem.stats.asset.cashFlow > 0
-                                ? "+"
-                                : ""
-                            }$${priceToStr(
-                              Math.abs(
-                                Math.round(
-                                  storeActiveItem.stats.asset.cashFlow *
-                                    multipliers[storeActiveItem.type]
-                                )
-                              )
-                            )}`}
-                          </Text>
-                        </View>
                       </>
                     ) : (
                       <></>
                     )}
+                    <Text style={[styles.storeStatsStubtitle, styles.text]}>
+                      As an asset:
+                    </Text>
+                    <View style={styles.storeStatsLine}>
+                      <Text style={[styles.storeStatName, styles.text]}>
+                        Life Quality:
+                      </Text>
+                      <Text style={[styles.text]}>
+                        {`${
+                          storeActiveItem.stats.asset.lifeQuality > 0 ? "+" : ""
+                        }${storeActiveItem.stats.asset.lifeQuality}pts`}
+                      </Text>
+                    </View>
+                    <View style={styles.storeStatsLine}>
+                      <Text style={[styles.storeStatName, styles.text]}>
+                        Cash flow:
+                      </Text>
+                      <Text style={[styles.text]}>
+                        {`${
+                          storeActiveItem.stats.asset.cashFlow > 0 ? "+" : ""
+                        }$${priceToStr(
+                          Math.abs(
+                            Math.round(
+                              storeActiveItem.stats.asset.cashFlow *
+                                multipliers[
+                                  storeActiveItem.type != "business"
+                                    ? storeActiveItem.type
+                                    : "cash"
+                                ]
+                            )
+                          )
+                        )}`}
+                      </Text>
+                    </View>
                   </View>
                   <LinearGradient
                     colors={[
