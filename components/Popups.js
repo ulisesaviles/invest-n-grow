@@ -76,7 +76,7 @@ export default Popups = () => {
     }, 150);
   };
 
-  const handlePopup = (open) => {
+  const handlePopup = (open, name) => {
     if (open) {
       showPopUp();
     } else {
@@ -139,8 +139,8 @@ export default Popups = () => {
         currentState = newState;
         setStoreIsActive(newState.popupStates.store);
         setEventsIsActive(newState.popupStates.events);
-        newState.popupStates.store ? handlePopup(true) : null;
-        newState.popupStates.events ? handlePopup(true) : null;
+        newState.popupStates.store ? handlePopup(true, "store") : null;
+        newState.popupStates.events ? handlePopup(true, "events") : null;
       }
     });
   }
@@ -167,7 +167,7 @@ export default Popups = () => {
             >
               <TouchableOpacity
                 onPress={() => {
-                  handlePopup(false);
+                  handlePopup(false, storeIsActive ? "store" : "events");
                   setTimeout(() => {
                     store.dispatch({
                       type: "handlePopup",
@@ -197,7 +197,7 @@ export default Popups = () => {
               >
                 <TouchableOpacity
                   onPress={() => {
-                    handlePopup(false);
+                    handlePopup(false, storeIsActive ? "store" : "events");
                     setTimeout(() => {
                       store.dispatch({
                         type: "handlePopup",

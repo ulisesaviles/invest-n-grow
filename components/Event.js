@@ -1,3 +1,4 @@
+// Imports from React Native
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { useColorScheme } from "react-native-appearance";
@@ -13,6 +14,7 @@ export default Event = (props) => {
   let colorScheme = useColorScheme();
   const currentEvent = props.event;
 
+  // Render
   const render = () => {
     return (
       <View style={styles.eventContainer}>
@@ -116,6 +118,7 @@ export default Event = (props) => {
     );
   };
 
+  // Styles
   const styles = StyleSheet.create({
     eventContainer: {
       width: "90%",
@@ -178,5 +181,5 @@ export default Event = (props) => {
     },
   });
 
-  render();
+  return render();
 };
