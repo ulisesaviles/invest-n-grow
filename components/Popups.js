@@ -66,6 +66,7 @@ export default Popups = () => {
   const handleNewEvent = async () => {
     newEvent();
     let currentGame = store.getState().currentGame;
+    console.log(currentGame.multipliers);
     await storeData("currentGame", currentGame, true);
     translateEvent("right", 150);
     setTimeout(() => {
@@ -253,6 +254,7 @@ export default Popups = () => {
                         <Text style={styles.getNewEvent}>Next month</Text>
                       </TouchableOpacity>
                     </LinearGradient>
+                    <Text style={styles.debtWarning}>(Debt grows 5%)</Text>
                     {currentGameEvents.length > 0 ? (
                       <View style={styles.eventsNavContainer}>
                         <TouchableOpacity
@@ -336,6 +338,12 @@ export default Popups = () => {
       top: 20,
       right: 20,
     },
+    debtWarning: {
+      color: colors[colorScheme].fonts.primary,
+      alignSelf: "center",
+      position: "absolute",
+      top: 25,
+    },
     eventsContainer: {
       justifyContent: "space-between",
       height: "80%",
@@ -366,6 +374,8 @@ export default Popups = () => {
       alignItems: "center",
       justifyContent: "center",
       borderRadius: 10,
+      position: "relative",
+      bottom: 10,
     },
     popUpContainer: {
       backgroundColor: colors[colorScheme].containers,
