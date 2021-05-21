@@ -6,6 +6,7 @@ const initialState = {
     events: false,
   },
   currentGame: defaultValues,
+  currentPropertyIndex: 0,
 };
 
 export default Reducer = (state = initialState, action) => {
@@ -34,6 +35,7 @@ export default Reducer = (state = initialState, action) => {
       currentGame: {
         ...state.currentGame,
         ownedProperties: action.payload.updatedProperties,
+        debt: state.currentGame.debt * 1.05,
         multipliers: {
           realEstate:
             state.currentGame.multipliers.realEstate *
@@ -57,6 +59,11 @@ export default Reducer = (state = initialState, action) => {
     };
   } else if (action.type === "reset") {
     return initialState;
+  } else if (action.type === "displayProperty") {
+    return {
+      ...state,
+      currentPropertyIndex: action.payload.index,
+    };
   }
   return state;
 };

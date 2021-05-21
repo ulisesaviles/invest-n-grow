@@ -11,19 +11,45 @@ import {
 } from "react-native";
 import { useColorScheme } from "react-native-appearance";
 
+// Redux
+import store from "../config/redux/store";
+
+// Local imports
 import colors from "../config/colors";
-import richHouse from "../assets/img/richHouse.png";
-import poorHouse from "../assets/img/poorHouse.png";
+import properties from "../config/properties";
+import cash from "../assets/img/bill-icon.png";
 
 import { Entypo } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
+import { priceToStr } from "../config/formatter";
 
 export default Properties = () => {
   let colorScheme = useColorScheme();
-  const [property, setProperty] = useState(richHouse);
-
+  const [propertyIndex, setPropertyindex] = useState(0);
   const [hideProperty, setHideProperty] = useState(false);
-
+  const [firstLoad, setFirtsLoad] = useState(true);
+  const [multiplier, setMultiplier] = useState(1);
+  const [property, setProperty] = useState({
+    name: "Cash",
+    img: cash,
+    value: 1,
+    type: "cash",
+    stats: {
+      asset: {
+        cashFlow: 0.01,
+        lifeQuality: 0,
+      },
+      commodity: {
+        cashFlow: 0.002,
+        lifeQuality: 0,
+      },
+    },
+  });
+  const [myProperty, setMyProperty] = useState({
+    name: "Cash",
+    isAnAsset: true,
+    ammount: 5000,
+  });
   const animatedValues = {
     propertyPosition: useRef(new Animated.Value(0)).current,
   };
@@ -41,17 +67,194 @@ export default Properties = () => {
     }).start();
   };
 
-  const propertyNav = (direction) => {
-    translateProperty(direction == "left" ? "right" : "left", 200);
-
+  const propertyNav = (index) => {
+    translateProperty(index > propertyIndex ? "left" : "right", 200);
+    setPropertyindex(index);
     // Change the property
     setTimeout(() => {
       setHideProperty(true);
-      property == richHouse ? setProperty(poorHouse) : setProperty(richHouse);
-      translateProperty(direction, 0);
+      let myProperties = store.getState().currentGame.ownedProperties;
+      setMyProperty(myProperties[index]);
+      let tempProperty = propertyWName(myProperties[index].name);
+      setProperty(tempProperty);
+      setMultiplier(
+        tempProperty.type === "realEstate" ||
+          tempProperty.type === "crypto" ||
+          tempProperty.type === "cash" ||
+          tempProperty.type === "cars" ||
+          tempProperty.type === "stocks"
+          ? store.getState().currentGame.multipliers[tempProperty.type]
+          : 1
+      );
+      translateProperty(index > propertyIndex ? "right" : "left", 0);
       setHideProperty(false);
       translateProperty("center", 200);
     }, 200);
+  };
+
+  const propertyWName = (name) => {
+    for (let i = 0; i < properties.length; i++) {
+      if (properties[i].name === name) {
+        return properties[i];
+      }
+    }
+    return null;
+  };
+
+  if (firstLoad) {
+    setFirtsLoad(false);
+    let myProperties = store.getState().currentGame.ownedProperties;
+    setMyProperty(myProperties[propertyIndex]);
+    let tempProperty = propertyWName(myProperties[propertyIndex].name);
+    setProperty(tempProperty);
+    setMultiplier(
+      tempProperty.type === "realEstate" ||
+        tempProperty.type === "crypto" ||
+        tempProperty.type === "cash" ||
+        tempProperty.type === "cars" ||
+        tempProperty.type === "stocks"
+        ? store.getState().currentGame.multipliers[tempProperty.type]
+        : 1
+    );
+    store.subscribe(() => {
+      propertyNav(store.getState().currentPropertyIndex);
+    });
+  }
+
+  const render = () => {
+    return (
+      <View style={styles.container}>
+        <Text style={[styles.text, styles.title]}>Properties</Text>
+        <View style={styles.containerHorizontal}>
+          <TouchableOpacity
+            onPress={() => {
+              propertyNav(
+                propertyIndex === 0 ? properties.length - 1 : propertyIndex - 1
+              );
+            }}
+          >
+            <Entypo
+              name="chevron-small-left"
+              size={60}
+              color={colors[colorScheme].arrow}
+            />
+          </TouchableOpacity>
+          <Animated.View style={styles.containerContent}>
+            <ScrollView style={{ width: "100%", height: "100%" }}>
+              <Text style={[styles.text, styles.propertyTitle]}>
+                {property.name}
+              </Text>
+              <Image style={styles.img} source={property.img} />
+              <View style={styles.separator} />
+              <View style={styles.containerSection2}>
+                <View style={styles.textContainer}>
+                  {property.type !== "salary" ? (
+                    <View style={styles.textRow}>
+                      <Text style={[styles.text, styles.subtitle]}>
+                        {property.type === "cash" ? "Ammount:" : "You paid:"}
+                      </Text>
+                      <Text style={[styles.text, styles.content]}>{`${
+                        property.type === "cash" ? "" : "$"
+                      }${priceToStr(
+                        Math.round(
+                          property.type === "cash"
+                            ? myProperty.ammount
+                            : myProperty.pricePaid
+                        )
+                      )}`}</Text>
+                    </View>
+                  ) : (
+                    <></>
+                  )}
+                  <View style={styles.textRow}>
+                    <Text style={[styles.text, styles.subtitle]}>
+                      Current value:
+                    </Text>
+                    <Text style={[styles.text, styles.content]}>{`$${priceToStr(
+                      Math.round(property.value * multiplier)
+                    )}`}</Text>
+                  </View>
+                  <View style={styles.textRow}>
+                    <Text style={[styles.text, styles.subtitle]}>
+                      Life quality:
+                    </Text>
+                    <Text style={[styles.text, styles.content]}>{`${
+                      property.stats.commodity === undefined &&
+                      !myProperty.isAnAsset
+                        ? 0
+                        : property.stats[
+                            myProperty.isAnAsset ? "asset" : "commodity"
+                          ].lifeQuality >= 0
+                        ? "+"
+                        : "-"
+                    }${Math.abs(
+                      property.stats.commodity === undefined &&
+                        !myProperty.isAnAsset
+                        ? 0
+                        : property.stats[
+                            myProperty.isAnAsset ? "asset" : "commodity"
+                          ].lifeQuality
+                    )}pts`}</Text>
+                  </View>
+                  <View style={styles.textRow}>
+                    <Text style={[styles.text, styles.subtitle]}>
+                      Cash flow:
+                    </Text>
+                    <Text style={[styles.text, styles.content]}>{`${
+                      property.stats.commodity === undefined &&
+                      !myProperty.isAnAsset
+                        ? 0
+                        : property.stats[
+                            myProperty.isAnAsset ? "asset" : "commodity"
+                          ].cashFlow >= 0
+                        ? "+"
+                        : "-"
+                    }$${priceToStr(
+                      Math.abs(
+                        Math.round(
+                          property.stats.commodity === undefined &&
+                            !myProperty.isAnAsset
+                            ? 0
+                            : property.stats[
+                                myProperty.isAnAsset ? "asset" : "commodity"
+                              ].cashFlow * multiplier
+                        )
+                      )
+                    )}`}</Text>
+                  </View>
+                </View>
+                <TouchableOpacity style={styles.sellBtn}>
+                  <LinearGradient
+                    colors={[
+                      colors[colorScheme].gradients.green.start,
+                      colors[colorScheme].gradients.green.end,
+                    ]}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 1 }}
+                    style={styles.btnGradient}
+                  >
+                    <Text style={styles.sell}>Sell</Text>
+                  </LinearGradient>
+                </TouchableOpacity>
+              </View>
+            </ScrollView>
+          </Animated.View>
+          <TouchableOpacity
+            onPress={() => {
+              propertyNav(
+                propertyIndex === properties.length - 1 ? 0 : propertyIndex + 1
+              );
+            }}
+          >
+            <Entypo
+              name="chevron-small-right"
+              size={60}
+              color={colors[colorScheme].arrow}
+            />
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
   };
 
   const styles = StyleSheet.create({
@@ -155,80 +358,5 @@ export default Properties = () => {
       marginBottom: 5,
     },
   });
-
-  return (
-    <View style={styles.container}>
-      <Text style={[styles.text, styles.title]}>Properties</Text>
-      <View style={styles.containerHorizontal}>
-        <TouchableOpacity
-          onPress={() => {
-            propertyNav("left");
-          }}
-        >
-          <Entypo
-            name="chevron-small-left"
-            size={60}
-            color={colors[colorScheme].arrow}
-          />
-        </TouchableOpacity>
-        <Animated.View style={styles.containerContent}>
-          <ScrollView style={{ width: "100%", height: "100%" }}>
-            <Text style={[styles.text, styles.propertyTitle]}>
-              Beach Mansion
-            </Text>
-            <Image style={styles.img} source={property} />
-            <View style={styles.separator} />
-            <View style={styles.containerSection2}>
-              <View style={styles.textContainer}>
-                <View style={styles.textRow}>
-                  <Text style={[styles.text, styles.subtitle]}>You paid:</Text>
-                  <Text style={[styles.text, styles.content]}>$1.8M</Text>
-                </View>
-                <View style={styles.textRow}>
-                  <Text style={[styles.text, styles.subtitle]}>
-                    Current value:
-                  </Text>
-                  <Text style={[styles.text, styles.content]}>$1.6M</Text>
-                </View>
-                <View style={styles.textRow}>
-                  <Text style={[styles.text, styles.subtitle]}>
-                    Life quality:
-                  </Text>
-                  <Text style={[styles.text, styles.content]}>+20pts</Text>
-                </View>
-                <View style={styles.textRow}>
-                  <Text style={[styles.text, styles.subtitle]}>Cash flow:</Text>
-                  <Text style={[styles.text, styles.content]}>-$2k</Text>
-                </View>
-              </View>
-              <TouchableOpacity style={styles.sellBtn}>
-                <LinearGradient
-                  colors={[
-                    colors[colorScheme].gradients.green.start,
-                    colors[colorScheme].gradients.green.end,
-                  ]}
-                  start={{ x: 0, y: 0 }}
-                  end={{ x: 1, y: 1 }}
-                  style={styles.btnGradient}
-                >
-                  <Text style={styles.sell}>Sell</Text>
-                </LinearGradient>
-              </TouchableOpacity>
-            </View>
-          </ScrollView>
-        </Animated.View>
-        <TouchableOpacity
-          onPress={() => {
-            propertyNav("right");
-          }}
-        >
-          <Entypo
-            name="chevron-small-right"
-            size={60}
-            color={colors[colorScheme].arrow}
-          />
-        </TouchableOpacity>
-      </View>
-    </View>
-  );
+  return render();
 };

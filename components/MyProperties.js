@@ -19,8 +19,6 @@ import colors from "../config/colors";
 import properties from "../config/properties";
 import { getData } from "../config/asyncStorage";
 
-// Assets
-
 export default MyProperties = () => {
   // Constants
   let colorScheme = useColorScheme();
@@ -31,6 +29,16 @@ export default MyProperties = () => {
   const [firstLoad, setFirtsLoad] = useState(true);
 
   // Functions
+  const handleDisplayProperty = (index) => {
+    console.log(index);
+    store.dispatch({
+      type: "displayProperty",
+      payload: {
+        index: index,
+      },
+    });
+  };
+
   const propertyWName = (name) => {
     for (let i = 0; i < properties.length; i++) {
       if (properties[i].name === name) {
@@ -120,7 +128,13 @@ export default MyProperties = () => {
                       key={ownedProperties.indexOf(property)}
                       style={styles.mappedProperty}
                     >
-                      <TouchableOpacity>
+                      <TouchableOpacity
+                        onPress={() => {
+                          handleDisplayProperty(
+                            ownedProperties.indexOf(property)
+                          );
+                        }}
+                      >
                         <View style={styles.assetContainer}>
                           <Image
                             source={propertyWName(property.name).img}
@@ -141,7 +155,13 @@ export default MyProperties = () => {
                       key={ownedProperties.indexOf(property)}
                       style={styles.mappedProperty}
                     >
-                      <TouchableOpacity>
+                      <TouchableOpacity
+                        onPress={() => {
+                          handleDisplayProperty(
+                            ownedProperties.indexOf(property)
+                          );
+                        }}
+                      >
                         <View style={styles.assetContainer}>
                           <Image
                             source={propertyWName(property.name).img}
@@ -174,7 +194,7 @@ export default MyProperties = () => {
     assetName: {
       color: colors[colorScheme].fonts.primary,
       fontWeight: "500",
-      width: 60,
+      width: 70,
       textAlign: "center",
       alignSelf: "center",
     },
