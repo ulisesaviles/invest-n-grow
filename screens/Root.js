@@ -1,11 +1,16 @@
+// React native imports
 import React, { useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { useColorScheme } from "react-native-appearance";
-import colors from "../config/colors";
 import { useNavigation } from "@react-navigation/native";
+
+// Local imports
+import colors from "../config/colors";
 import { getData, storeData } from "../config/asyncStorage";
-import store from "../config/redux/store";
 import defaultValues from "../config/defaultValues";
+
+// Redux
+import store from "../config/redux/store";
 
 export default Root = () => {
   const navigation = useNavigation();

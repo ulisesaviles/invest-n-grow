@@ -13,6 +13,7 @@ import smallBusiness from "../assets/img/smallBusiness.png";
 import smallDepartment from "../assets/img/smallDepartment.png";
 import stocks from "../assets/img/stocks.png";
 
+// Exportable object
 export default properties = [
   {
     name: "Beach Mansion",

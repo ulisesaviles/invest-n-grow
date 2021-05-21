@@ -6,6 +6,7 @@ export default defaultValues = {
     cars: 1,
     stocks: 1,
   },
+
   ownedProperties: [
     {
       name: "Cheap Car",
@@ -30,6 +31,8 @@ export default defaultValues = {
       ammount: 1,
     },
   ],
+
   passedEvents: [],
+
   debt: 102500,
 };

@@ -2,13 +2,119 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { useColorScheme } from "react-native-appearance";
 
+// Local imports
 import colors from "../config/colors";
 
+// Expo imports
 import { LinearGradient } from "expo-linear-gradient";
 
 export default Event = (props) => {
+  // Constants
   let colorScheme = useColorScheme();
   const currentEvent = props.event;
+
+  const render = () => {
+    return (
+      <View style={styles.eventContainer}>
+        <Text style={[styles.text, styles.eventTitle]}>
+          {currentEvent !== undefined
+            ? currentEvent.title
+            : "There are no events"}
+        </Text>
+        <Text style={[styles.text, styles.eventDescription]}>
+          {currentEvent !== undefined
+            ? currentEvent.description
+            : "Press 'Get new event!'"}
+        </Text>
+        <View style={styles.shadow}>
+          <LinearGradient
+            colors={[
+              colors[colorScheme].gradients.orange.start,
+              colors[colorScheme].gradients.orange.end,
+            ]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+            style={styles.multipliersContainer}
+          >
+            <Text
+              style={[
+                { color: colors.dark.fonts.primary },
+                styles.multipliersTitle,
+              ]}
+            >
+              Multipliers
+            </Text>
+            <View style={styles.multiplierContainer}>
+              <Text
+                style={[
+                  { color: colors.dark.fonts.primary },
+                  styles.multiplierCategory,
+                ]}
+              >
+                Crypto:
+              </Text>
+              <Text
+                style={[
+                  { color: colors.dark.fonts.primary },
+                  styles.multiplier,
+                ]}
+              >
+                {`${
+                  currentEvent !== undefined
+                    ? currentEvent.multiplier.crypto
+                    : "-"
+                }`}
+              </Text>
+            </View>
+            <View style={styles.multiplierContainer}>
+              <Text
+                style={[
+                  { color: colors.dark.fonts.primary },
+                  styles.multiplierCategory,
+                ]}
+              >
+                Real Estate:
+              </Text>
+              <Text
+                style={[
+                  { color: colors.dark.fonts.primary },
+                  styles.multiplier,
+                ]}
+              >
+                {`${
+                  currentEvent !== undefined
+                    ? currentEvent.multiplier.realEstate
+                    : "-"
+                }`}
+              </Text>
+            </View>
+            <View style={styles.multiplierContainer}>
+              <Text
+                style={[
+                  { color: colors.dark.fonts.primary },
+                  styles.multiplierCategory,
+                ]}
+              >
+                Stock Market:
+              </Text>
+              <Text
+                style={[
+                  { color: colors.dark.fonts.primary },
+                  styles.multiplier,
+                ]}
+              >
+                {`${
+                  currentEvent !== undefined
+                    ? currentEvent.multiplier.stocks
+                    : "-"
+                }`}
+              </Text>
+            </View>
+          </LinearGradient>
+        </View>
+      </View>
+    );
+  };
 
   const styles = StyleSheet.create({
     eventContainer: {
@@ -72,95 +178,5 @@ export default Event = (props) => {
     },
   });
 
-  return (
-    <View style={styles.eventContainer}>
-      <Text style={[styles.text, styles.eventTitle]}>
-        {currentEvent !== undefined
-          ? currentEvent.title
-          : "There are no events"}
-      </Text>
-      <Text style={[styles.text, styles.eventDescription]}>
-        {currentEvent !== undefined
-          ? currentEvent.description
-          : "Press 'Get new event!'"}
-      </Text>
-      <View style={styles.shadow}>
-        <LinearGradient
-          colors={[
-            colors[colorScheme].gradients.orange.start,
-            colors[colorScheme].gradients.orange.end,
-          ]}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 1 }}
-          style={styles.multipliersContainer}
-        >
-          <Text
-            style={[
-              { color: colors.dark.fonts.primary },
-              styles.multipliersTitle,
-            ]}
-          >
-            Multipliers
-          </Text>
-          <View style={styles.multiplierContainer}>
-            <Text
-              style={[
-                { color: colors.dark.fonts.primary },
-                styles.multiplierCategory,
-              ]}
-            >
-              Crypto:
-            </Text>
-            <Text
-              style={[{ color: colors.dark.fonts.primary }, styles.multiplier]}
-            >
-              {`${
-                currentEvent !== undefined
-                  ? currentEvent.multiplier.crypto
-                  : "-"
-              }`}
-            </Text>
-          </View>
-          <View style={styles.multiplierContainer}>
-            <Text
-              style={[
-                { color: colors.dark.fonts.primary },
-                styles.multiplierCategory,
-              ]}
-            >
-              Real Estate:
-            </Text>
-            <Text
-              style={[{ color: colors.dark.fonts.primary }, styles.multiplier]}
-            >
-              {`${
-                currentEvent !== undefined
-                  ? currentEvent.multiplier.realEstate
-                  : "-"
-              }`}
-            </Text>
-          </View>
-          <View style={styles.multiplierContainer}>
-            <Text
-              style={[
-                { color: colors.dark.fonts.primary },
-                styles.multiplierCategory,
-              ]}
-            >
-              Stock Market:
-            </Text>
-            <Text
-              style={[{ color: colors.dark.fonts.primary }, styles.multiplier]}
-            >
-              {`${
-                currentEvent !== undefined
-                  ? currentEvent.multiplier.stocks
-                  : "-"
-              }`}
-            </Text>
-          </View>
-        </LinearGradient>
-      </View>
-    </View>
-  );
+  render();
 };

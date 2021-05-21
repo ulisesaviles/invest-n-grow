@@ -31,13 +31,13 @@ export default ProgressIndicator = () => {
     herritage: 10000000,
     debt: 10000000,
   });
-
   const animatedValues = {
     lifeQuality: useRef(new Animated.Value(0)).current,
     herritage: useRef(new Animated.Value(0)).current,
     debt: useRef(new Animated.Value(0)).current,
   };
 
+  // Functions
   const calculateLifeQuality = (properties) => {
     let res = 0;
     for (let i = 0; i < properties.length; i++) {
@@ -80,7 +80,6 @@ export default ProgressIndicator = () => {
     return null;
   };
 
-  // Functions
   const setIndicators = () => {
     currentGame = store.getState().currentGame;
     percentages = {

@@ -237,6 +237,7 @@
     "acumulative": true,
     "onlyOnSequence": false
   },
+
   {
     "name": "Prices return to normal",
     "title": "Prices return to normal",

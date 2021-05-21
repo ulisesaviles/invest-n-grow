@@ -31,6 +31,7 @@ export default Popups = () => {
   const [eventsIsActive, setEventsIsActive] = useState(false);
   const [firstLoad, setFirtsLoad] = useState(true);
   const [currentGameEvents, setCurrentGameEvents] = useState([]);
+  const [currentEventIndex, setCurrentEventIndex] = useState(0);
 
   const animatedValues = {
     popUpBackground: useRef(new Animated.Value(0)).current,
@@ -38,8 +39,6 @@ export default Popups = () => {
     eventTranslation: useRef(new Animated.Value(0)).current,
     storeTranslation: useRef(new Animated.Value(0)).current,
   };
-
-  const [currentEventIndex, setCurrentEventIndex] = useState(0);
 
   // Functions
   const eventNavigation = (direction) => {
@@ -77,7 +76,7 @@ export default Popups = () => {
     }, 150);
   };
 
-  const handlePopup = (open, name) => {
+  const handlePopup = (open) => {
     if (open) {
       showPopUp();
     } else {
@@ -140,8 +139,8 @@ export default Popups = () => {
         currentState = newState;
         setStoreIsActive(newState.popupStates.store);
         setEventsIsActive(newState.popupStates.events);
-        newState.popupStates.store ? handlePopup(true, "store") : null;
-        newState.popupStates.events ? handlePopup(true, "events") : null;
+        newState.popupStates.store ? handlePopup(true) : null;
+        newState.popupStates.events ? handlePopup(true) : null;
       }
     });
   }
@@ -168,7 +167,7 @@ export default Popups = () => {
             >
               <TouchableOpacity
                 onPress={() => {
-                  handlePopup(false, storeIsActive ? "store" : "events");
+                  handlePopup(false);
                   setTimeout(() => {
                     store.dispatch({
                       type: "handlePopup",
@@ -198,7 +197,7 @@ export default Popups = () => {
               >
                 <TouchableOpacity
                   onPress={() => {
-                    handlePopup(false, storeIsActive ? "store" : "events");
+                    handlePopup(false);
                     setTimeout(() => {
                       store.dispatch({
                         type: "handlePopup",

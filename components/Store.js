@@ -44,18 +44,7 @@ export default Store = () => {
 
   // Functions
   const handlePurchase = (property, multiplier) => {
-    console.log(
-      `I will purchase ${property.name} at ${property.value * multiplier}`
-    );
     // Pay for it with cash and debt.
-    let cashAvailable = ownedPropertyWName("Cash").ammount;
-    console.log(`I have ${cashAvailable} cash available`);
-    console.log(`The property's value is: ${property.value * multiplier}`);
-    console.log(
-      property.value * multiplier > cashAvailable
-        ? `Debt: ${property.value * multiplier - cashAvailable}`
-        : `Cash after purchase: ${cashAvailable - property.value * multiplier}`
-    );
     store.dispatch({
       type: "buyProperty",
       payload: purchaseReducerPayload(property, multiplier),

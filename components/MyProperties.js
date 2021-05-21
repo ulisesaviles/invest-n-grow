@@ -30,7 +30,6 @@ export default MyProperties = () => {
 
   // Functions
   const handleDisplayProperty = (index) => {
-    console.log(index);
     store.dispatch({
       type: "displayProperty",
       payload: {

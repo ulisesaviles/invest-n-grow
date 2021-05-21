@@ -91,5 +91,6 @@ export default Reducer = (state = initialState, action) => {
       },
     };
   }
+
   return state;
 };

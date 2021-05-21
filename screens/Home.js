@@ -1,5 +1,5 @@
 // Imports from react native
-import React, { useState, useRef } from "react";
+import React from "react";
 import {
   StyleSheet,
   Text,
@@ -7,7 +7,6 @@ import {
   SafeAreaView,
   Dimensions,
   TouchableOpacity,
-  Animated,
 } from "react-native";
 import { useColorScheme } from "react-native-appearance";
 
@@ -27,13 +26,6 @@ import Popups from "../components/Popups";
 export default Home = () => {
   // Constants
   let colorScheme = useColorScheme();
-  const [firstload, setFirtsLoad] = useState(true);
-
-  const animatedValues = {
-    lifeQuality: useRef(new Animated.Value(0)).current,
-    herritage: useRef(new Animated.Value(0)).current,
-    debt: useRef(new Animated.Value(0)).current,
-  };
 
   // Functions
   const handlePopup = (open, name) => {
@@ -47,24 +39,6 @@ export default Home = () => {
       },
     });
   };
-
-  const updateIndicators = (indicator, value) => {
-    Animated.timing(animatedValues[indicator], {
-      toValue: (Dimensions.get("screen").width * 0.95 - 40) * (value / 100),
-      duration: 400,
-      useNativeDriver: false,
-    }).start();
-  };
-
-  // Animations on load
-  if (firstload) {
-    setFirtsLoad(false);
-    setTimeout(() => {
-      updateIndicators("lifeQuality", 80);
-      updateIndicators("herritage", 50);
-      updateIndicators("debt", 70);
-    }, 300);
-  }
 
   // Render
   const render = () => {

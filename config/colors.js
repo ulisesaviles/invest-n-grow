@@ -35,6 +35,7 @@ export default {
     },
     separator: "rgb(100,100,100)",
   },
+
   light: {
     arrow: "rgb(50,50,50)",
     background: "rgb(240,240,240)",

@@ -58,7 +58,6 @@ export default Properties = () => {
 
   // Functions
   const handleActionBtn = () => {
-    console.log("Action btn pressed for a " + property.type);
     if (property.type === "cash") {
       payDebt();
     } else if (property.type === "salary") {
@@ -69,11 +68,6 @@ export default Properties = () => {
   };
 
   const handleTurnBtn = () => {
-    console.log(
-      `Turn ${property.name} into a${
-        myProperty.isAnAsset ? " commodity" : "n asset"
-      }`
-    );
     let updatedProperties = store.getState().currentGame.ownedProperties;
     updatedProperties[updatedProperties.indexOf(myProperty)] = {
       ...myProperty,
@@ -210,7 +204,6 @@ export default Properties = () => {
         : 1
     );
     store.subscribe(() => {
-      console.log(store.getState().currentGame.ownedProperties);
       propertyNav(store.getState().currentPropertyIndex);
     });
   }
@@ -500,5 +493,6 @@ export default Properties = () => {
       shadowOpacity: 0.16,
     },
   });
+
   return render();
 };

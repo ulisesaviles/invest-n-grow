@@ -6,7 +6,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 const Stack = createStackNavigator();
 import { useColorScheme } from "react-native-appearance";
 
-// Local
+// Local imports
 import { Root, Home } from "./screens";
 
 export default function App() {

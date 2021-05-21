@@ -24,5 +24,6 @@ export const priceToStr = (price) => {
 
     return price.slice(0, price.length - 6) + "M";
   }
+
   return price.toString();
 };

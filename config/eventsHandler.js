@@ -46,7 +46,6 @@ export const newEvent = () => {
         ].cashFlow;
       }
     }
-    console.log(res);
     return res + ownedPropertyWName("Cash").ammount;
   };
 
@@ -98,7 +97,6 @@ export const newEvent = () => {
   };
 
   const currentState = store.getState();
-  // console.log(updatedProperties());
   if (currentState.currentGame.passedEvents.length === 0) {
     store.dispatch({
       type: "newEvent",
