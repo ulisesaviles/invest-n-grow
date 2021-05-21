@@ -26,6 +26,11 @@ export default ProgressIndicator = () => {
   // Constants
   let colorScheme = useColorScheme();
   const [firstload, setFirtsLoad] = useState(true);
+  const [limits, setLimits] = useState({
+    lifeQuality: 100,
+    herritage: 10000000,
+    debt: 10000000,
+  });
 
   const animatedValues = {
     lifeQuality: useRef(new Animated.Value(0)).current,
@@ -75,58 +80,48 @@ export default ProgressIndicator = () => {
     return null;
   };
 
-  const limits = {
-    lifeQuality: 100,
-    herritage: 10000000,
-    debt: 10000000,
-  };
-
   // Functions
-  const checkIfWin = (indicatorsPercentages) => {
-    console.log(indicatorsPercentages);
-    if (
-      indicatorsPercentages.herritage >= 100 &&
-      indicatorsPercentages.lifeQuality >= 100
-    ) {
-      Alert.alert(
-        "You won!",
-        `Your herritage just reached ${priceToStr(
-          limits.herritage
-        )} and your life quality reached ${limits.lifeQuality}pts`,
-        [
-          {
-            text: "Continue",
-            onPress: () => console.log("Continue"),
-          },
-          {
-            text: "Restart",
-            onPress: () => console.log("Restart"),
-            style: "cancel",
-          },
-        ]
-      );
-    } else if (indicatorsPercentages.debt >= 100) {
-      Alert.alert(
-        "You lost",
-        `Your debt just reached ${priceToStr(limits.debt)}`,
-        [
-          {
-            text: "Continue",
-            onPress: () => console.log("Continue"),
-          },
-          {
-            text: "Restart",
-            onPress: () => console.log("Restart"),
-            style: "cancel",
-          },
-        ]
-      );
+  const setIndicators = () => {
+    currentGame = store.getState().currentGame;
+    percentages = {
+      lifeQuality:
+        (calculateLifeQuality(currentGame.ownedProperties) /
+          limits.lifeQuality) *
+        100,
+      herritage:
+        (calculateHerritage(
+          currentGame.ownedProperties,
+          currentGame.multipliers,
+          currentGame.debt
+        ) /
+          limits.herritage) *
+        100,
+      debt: (currentGame.debt / limits.debt) * 100,
+    };
+    if (percentages.herritage >= 100 || percentages.debt >= 100) {
+      setLimits({
+        lifeQuality: limits.lifeQuality,
+        herritage: limits.herritage * 10,
+        debt: limits.debt * 10,
+      });
+      percentages = {
+        ...percentages,
+        herritage: percentages.herritage * 0.1,
+        debt: percentages.debt * 0.1,
+      };
     }
+    updateIndicators("lifeQuality", percentages.lifeQuality);
+    updateIndicators("herritage", percentages.herritage);
+    updateIndicators("debt", percentages.debt);
   };
 
   const updateIndicators = (indicator, value) => {
+    value = value > 100 ? 100 : value;
     Animated.timing(animatedValues[indicator], {
-      toValue: (Dimensions.get("screen").width * 0.95 - 40) * (value / 100),
+      toValue:
+        value > 0
+          ? (Dimensions.get("screen").width * 0.95 - 40) * (value / 100)
+          : 0,
       duration: 400,
       useNativeDriver: false,
     }).start();
@@ -138,51 +133,12 @@ export default ProgressIndicator = () => {
 
   if (firstload) {
     setFirtsLoad(false);
-    currentGame = store.getState().currentGame;
     setTimeout(async () => {
-      percentages = {
-        lifeQuality:
-          (calculateLifeQuality(currentGame.ownedProperties) /
-            limits.lifeQuality) *
-          100,
-        herritage:
-          (calculateHerritage(
-            currentGame.ownedProperties,
-            currentGame.multipliers,
-            currentGame.debt
-          ) /
-            limits.herritage) *
-          100,
-        debt: (currentGame.debt / limits.debt) * 100,
-      };
-      updateIndicators("lifeQuality", percentages.lifeQuality);
-      updateIndicators("herritage", percentages.herritage);
-      updateIndicators("debt", percentages.debt);
-      checkIfWin(percentages);
+      setIndicators();
     }, 300);
 
     store.subscribe(async () => {
-      currentGame = store.getState().currentGame;
-      percentages = {
-        lifeQuality:
-          (calculateLifeQuality(currentGame.ownedProperties) /
-            limits.lifeQuality) *
-          100,
-        herritage:
-          (calculateHerritage(
-            currentGame.ownedProperties,
-            currentGame.multipliers,
-            currentGame.debt
-          ) /
-            limits.herritage) *
-          100,
-        debt: (currentGame.debt / limits.debt) * 100,
-      };
-      console.log(percentages);
-      updateIndicators("lifeQuality", percentages.lifeQuality);
-      updateIndicators("herritage", percentages.herritage);
-      updateIndicators("debt", percentages.debt);
-      checkIfWin(percentages);
+      setIndicators();
     });
   }
 
