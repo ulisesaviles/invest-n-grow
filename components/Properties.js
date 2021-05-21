@@ -18,12 +18,14 @@ import store from "../config/redux/store";
 import colors from "../config/colors";
 import properties from "../config/properties";
 import cash from "../assets/img/bill-icon.png";
-
-import { Entypo } from "@expo/vector-icons";
-import { LinearGradient } from "expo-linear-gradient";
 import { priceToStr } from "../config/formatter";
 
+// Expo imports
+import { Entypo } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient";
+
 export default Properties = () => {
+  // Constants
   let colorScheme = useColorScheme();
   const [propertyIndex, setPropertyindex] = useState(0);
   const [hideProperty, setHideProperty] = useState(false);
@@ -54,17 +56,67 @@ export default Properties = () => {
     propertyPosition: useRef(new Animated.Value(0)).current,
   };
 
-  const translateProperty = (direction, duration) => {
-    Animated.timing(animatedValues.propertyPosition, {
-      toValue:
-        direction == "center"
-          ? 0
-          : direction == "left"
-          ? -1 * Dimensions.get("screen").width
-          : Dimensions.get("screen").width,
-      duration: duration,
-      useNativeDriver: false,
-    }).start();
+  // Functions
+  const handleActionBtn = () => {
+    console.log("Action btn pressed for a " + property.type);
+    if (property.type === "cash") {
+      payDebt();
+    } else if (property.type === "salary") {
+      quitJob();
+    } else {
+      sellCurrentProperty();
+    }
+  };
+
+  const handleTurnBtn = () => {
+    console.log(
+      `Turn ${property.name} into a${
+        myProperty.isAnAsset ? " commodity" : "n asset"
+      }`
+    );
+    let updatedProperties = store.getState().currentGame.ownedProperties;
+    updatedProperties[updatedProperties.indexOf(myProperty)] = {
+      ...myProperty,
+      isAnAsset: !myProperty.isAnAsset,
+    };
+    store.dispatch({
+      type: "updateProperties",
+      payload: {
+        updatedProperties,
+      },
+    });
+  };
+
+  const ownedPropertyWName = (name) => {
+    let properties = store.getState().currentGame.ownedProperties;
+    for (let i = 0; i < properties.length; i++) {
+      if (properties[i].name === name) {
+        return properties[i];
+      }
+    }
+    return null;
+  };
+
+  const payDebt = () => {
+    let updatedProperties = store.getState().currentGame.ownedProperties;
+    let cash = ownedPropertyWName("Cash");
+    let debt = store.getState().currentGame.debt;
+    if (cash.ammount > debt) {
+      cash.ammount = cash.ammount - debt;
+      debt = 0;
+    } else {
+      debt = debt - cash.ammount;
+      cash.ammount = 0;
+    }
+    updatedProperties[updatedProperties.indexOf(ownedPropertyWName("Cash"))] =
+      cash;
+    store.dispatch({
+      type: "payDebt",
+      payload: {
+        updatedProperties,
+        debt,
+      },
+    });
   };
 
   const propertyNav = (index) => {
@@ -101,6 +153,47 @@ export default Properties = () => {
     return null;
   };
 
+  const quitJob = () => {
+    let updatedProperties = store.getState().currentGame.ownedProperties;
+    updatedProperties.splice(
+      updatedProperties.indexOf(ownedPropertyWName("Salary")),
+      1
+    );
+    store.dispatch({
+      type: "updatePropertiesNResetNav",
+      payload: {
+        updatedProperties,
+      },
+    });
+  };
+
+  const sellCurrentProperty = () => {
+    let updatedProperties = store.getState().currentGame.ownedProperties;
+    updatedProperties[
+      updatedProperties.indexOf(ownedPropertyWName("Cash"))
+    ].ammount += property.value * multiplier;
+    updatedProperties.splice(updatedProperties.indexOf(myProperty), 1);
+    store.dispatch({
+      type: "updatePropertiesNResetNav",
+      payload: {
+        updatedProperties,
+      },
+    });
+  };
+
+  const translateProperty = (direction, duration) => {
+    Animated.timing(animatedValues.propertyPosition, {
+      toValue:
+        direction == "center"
+          ? 0
+          : direction == "left"
+          ? -1 * Dimensions.get("screen").width
+          : Dimensions.get("screen").width,
+      duration: duration,
+      useNativeDriver: false,
+    }).start();
+  };
+
   if (firstLoad) {
     setFirtsLoad(false);
     let myProperties = store.getState().currentGame.ownedProperties;
@@ -117,6 +210,7 @@ export default Properties = () => {
         : 1
     );
     store.subscribe(() => {
+      console.log(store.getState().currentGame.ownedProperties);
       propertyNav(store.getState().currentPropertyIndex);
     });
   }
@@ -223,7 +317,12 @@ export default Properties = () => {
                     )}`}</Text>
                   </View>
                 </View>
-                <TouchableOpacity style={styles.sellBtn}>
+                <TouchableOpacity
+                  style={styles.sellBtn}
+                  onPress={() => {
+                    handleActionBtn();
+                  }}
+                >
                   <LinearGradient
                     colors={[
                       colors[colorScheme].gradients.green.start,
@@ -233,10 +332,45 @@ export default Properties = () => {
                     end={{ x: 1, y: 1 }}
                     style={styles.btnGradient}
                   >
-                    <Text style={styles.sell}>Sell</Text>
+                    <Text style={styles.sell}>
+                      {property.type === "salary"
+                        ? "Quit"
+                        : property.type === "cash"
+                        ? "Pay debt"
+                        : "Sell"}
+                    </Text>
                   </LinearGradient>
                 </TouchableOpacity>
               </View>
+              {property.stats.commodity !== undefined ? (
+                <>
+                  <View style={styles.separator} />
+                  <TouchableOpacity
+                    style={styles.turnBtn}
+                    onPress={() => {
+                      handleTurnBtn();
+                    }}
+                  >
+                    <LinearGradient
+                      colors={[
+                        colors[colorScheme].gradients.blue.start,
+                        colors[colorScheme].gradients.blue.end,
+                      ]}
+                      start={{ x: 0, y: 0 }}
+                      end={{ x: 1, y: 1 }}
+                      style={styles.btnGradient}
+                    >
+                      <Text style={styles.sell}>
+                        {`Turn into a${
+                          myProperty.isAnAsset ? " commodity" : "n asset"
+                        }`}
+                      </Text>
+                    </LinearGradient>
+                  </TouchableOpacity>
+                </>
+              ) : (
+                <></>
+              )}
             </ScrollView>
           </Animated.View>
           <TouchableOpacity
@@ -282,7 +416,6 @@ export default Properties = () => {
       padding: 20,
       opacity: hideProperty ? 0 : 1,
       transform: [{ translateX: animatedValues.propertyPosition }],
-      // transform: [{ translateX: 0 }],
     },
     containerHorizontal: {
       flexDirection: "row",
@@ -314,7 +447,7 @@ export default Properties = () => {
     sellBtn: {
       position: "absolute",
       right: 0,
-      width: "30%",
+      width: "35%",
       shadowColor: colors[colorScheme].boxShadow,
       shadowRadius: 4,
       shadowOffset: {
@@ -356,6 +489,15 @@ export default Properties = () => {
       fontSize: 25,
       fontWeight: "600",
       marginBottom: 5,
+    },
+    turnBtn: {
+      shadowColor: colors[colorScheme].boxShadow,
+      shadowRadius: 4,
+      shadowOffset: {
+        width: 0,
+        height: 3,
+      },
+      shadowOpacity: 0.16,
     },
   });
   return render();
