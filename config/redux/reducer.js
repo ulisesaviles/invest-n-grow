@@ -64,6 +64,32 @@ export default Reducer = (state = initialState, action) => {
       ...state,
       currentPropertyIndex: action.payload.index,
     };
+  } else if (action.type === "updateProperties") {
+    return {
+      ...state,
+      currentGame: {
+        ...state.currentGame,
+        ownedProperties: action.payload.updatedProperties,
+      },
+    };
+  } else if (action.type === "updatePropertiesNResetNav") {
+    return {
+      ...state,
+      currentGame: {
+        ...state.currentGame,
+        ownedProperties: action.payload.updatedProperties,
+      },
+      currentPropertyIndex: 0,
+    };
+  } else if (action.type === "payDebt") {
+    return {
+      ...state,
+      currentGame: {
+        ...state.currentGame,
+        ownedProperties: action.payload.updatedProperties,
+        debt: action.payload.debt,
+      },
+    };
   }
   return state;
 };
