@@ -9,7 +9,7 @@ import luxuryCar from "../assets/img/luxuriousCar.png";
 import cheapCar from "../assets/img/cheapCar.png";
 import cybertruck from "../assets/img/cybertruck.png";
 import luxuryDepartment from "../assets/img/luxuriousDepartment.png";
-import smallBusiness from "../assets/img/smallBusiness.png";
+// import smallBusiness from "../assets/img/smallBusiness.png";
 import smallDepartment from "../assets/img/smallDepartment.png";
 import stocks from "../assets/img/stocks.png";
 
@@ -135,18 +135,18 @@ export default properties = [
       },
     },
   },
-  {
-    name: "Small Business",
-    img: smallBusiness,
-    value: 1000000,
-    type: "business",
-    stats: {
-      asset: {
-        cashFlow: 10000,
-        lifeQuality: 0,
-      },
-    },
-  },
+  // {
+  //   name: "Small Business",
+  //   img: smallBusiness,
+  //   value: 1000000,
+  //   type: "business",
+  //   stats: {
+  //     asset: {
+  //       cashFlow: 10000,
+  //       lifeQuality: 0,
+  //     },
+  //   },
+  // },
   {
     name: "Cheap Car",
     img: cheapCar,
