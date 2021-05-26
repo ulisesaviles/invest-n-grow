@@ -34,7 +34,7 @@ export default properties = [
   {
     name: "Big House",
     img: bigHouse,
-    value: 600000,
+    value: 500000,
     type: "realEstate",
     stats: {
       asset: {
