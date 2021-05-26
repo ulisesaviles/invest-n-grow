@@ -121,7 +121,7 @@ export default Store = () => {
           },
         ]}
       >
-        <ScrollView style={{ width: "50%", height: "52%" }}>
+        <ScrollView style={{ width: "50%", height: "64%" }}>
           <View style={styles.storeContainer}>
             {properties.map((property) => (
               <View
