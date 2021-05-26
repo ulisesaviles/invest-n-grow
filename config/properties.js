@@ -64,18 +64,6 @@ export default properties = [
     },
   },
   {
-    name: "Bitcoin",
-    img: bitcoin,
-    value: 1000,
-    type: "crypto",
-    stats: {
-      asset: {
-        cashFlow: 0,
-        lifeQuality: 0,
-      },
-    },
-  },
-  {
     name: "Small Deparment",
     img: smallDepartment,
     value: 100000,
@@ -203,6 +191,18 @@ export default properties = [
     stats: {
       asset: {
         cashFlow: 3,
+        lifeQuality: 0,
+      },
+    },
+  },
+  {
+    name: "Bitcoin",
+    img: bitcoin,
+    value: 1000,
+    type: "crypto",
+    stats: {
+      asset: {
+        cashFlow: 0,
         lifeQuality: 0,
       },
     },
