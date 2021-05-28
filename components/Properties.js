@@ -216,7 +216,9 @@ export default Properties = () => {
           <TouchableOpacity
             onPress={() => {
               propertyNav(
-                propertyIndex === 0 ? properties.length - 1 : propertyIndex - 1
+                propertyIndex === 0
+                  ? store.getState().currentGame.ownedProperties.length - 1
+                  : propertyIndex - 1
               );
             }}
           >
@@ -369,7 +371,10 @@ export default Properties = () => {
           <TouchableOpacity
             onPress={() => {
               propertyNav(
-                propertyIndex === properties.length - 1 ? 0 : propertyIndex + 1
+                propertyIndex ===
+                  store.getState().currentGame.ownedProperties.length - 1
+                  ? 0
+                  : propertyIndex + 1
               );
             }}
           >
