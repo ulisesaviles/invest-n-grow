@@ -71,11 +71,11 @@ export default properties = [
     stats: {
       asset: {
         cashFlow: 800,
-        lifeQuality: 10,
+        lifeQuality: 0,
       },
       commodity: {
         cashFlow: -80,
-        lifeQuality: 0,
+        lifeQuality: 10,
       },
     },
   },
@@ -87,7 +87,7 @@ export default properties = [
     stats: {
       asset: {
         cashFlow: 10000,
-        lifeQuality: 10,
+        lifeQuality: 0,
       },
       commodity: {
         cashFlow: -800,
@@ -163,7 +163,7 @@ export default properties = [
       },
       commodity: {
         cashFlow: -200,
-        lifeQuality: 20,
+        lifeQuality: 15,
       },
     },
   },
@@ -179,7 +179,7 @@ export default properties = [
       },
       commodity: {
         cashFlow: -1000,
-        lifeQuality: 30,
+        lifeQuality: 25,
       },
     },
   },
