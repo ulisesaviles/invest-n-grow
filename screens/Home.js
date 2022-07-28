@@ -7,8 +7,8 @@ import {
   SafeAreaView,
   Dimensions,
   TouchableOpacity,
+  Appearance,
 } from "react-native";
-import { useColorScheme } from "react-native-appearance";
 
 // Redux
 import store from "../config/redux/store";
@@ -25,7 +25,7 @@ import Popups from "../components/Popups";
 
 export default Home = () => {
   // Constants
-  let colorScheme = useColorScheme();
+  const colorScheme = Appearance.getColorScheme();
 
   // Functions
   const handlePopup = (open, name) => {

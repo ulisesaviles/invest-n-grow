@@ -1,7 +1,6 @@
 // Imports from React Native
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { useColorScheme } from "react-native-appearance";
+import { StyleSheet, Text, View, Appearance } from "react-native";
 
 // Local imports
 import colors from "../config/colors";
@@ -11,7 +10,7 @@ import { LinearGradient } from "expo-linear-gradient";
 
 export default Event = (props) => {
   // Constants
-  let colorScheme = useColorScheme();
+  const colorScheme = Appearance.getColorScheme();
   const currentEvent = props.event;
 
   // Render

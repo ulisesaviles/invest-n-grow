@@ -1,16 +1,16 @@
 // Imports from React Native
 import { StatusBar } from "expo-status-bar";
 import React from "react";
+import { Appearance } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 const Stack = createStackNavigator();
-import { useColorScheme } from "react-native-appearance";
 
 // Local imports
 import { Root, Home } from "./screens";
 
 export default function App() {
-  let colorScheme = useColorScheme();
+  const colorScheme = Appearance.getColorScheme();
   return (
     <>
       <NavigationContainer>

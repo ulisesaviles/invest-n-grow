@@ -9,8 +9,8 @@ import {
   Animated,
   ScrollView,
   Image,
+  Appearance,
 } from "react-native";
-import { useColorScheme } from "react-native-appearance";
 
 // Redux
 import store from "../config/redux/store";
@@ -27,7 +27,7 @@ import { getData, storeData } from "../config/asyncStorage";
 
 export default Store = () => {
   // Constants
-  let colorScheme = useColorScheme();
+  const colorScheme = Appearance.getColorScheme();
   const [storeActiveItem, setStoreActiveItem] = useState(null);
   const [firstLoad, setFirtsLoad] = useState(true);
   const [multipliers, setMultipliers] = useState({

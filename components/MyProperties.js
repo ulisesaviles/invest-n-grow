@@ -8,8 +8,8 @@ import {
   TouchableOpacity,
   ScrollView,
   Image,
+  Appearance,
 } from "react-native";
-import { useColorScheme } from "react-native-appearance";
 
 // Redux
 import store from "../config/redux/store";
@@ -21,7 +21,7 @@ import { getData } from "../config/asyncStorage";
 
 export default MyProperties = () => {
   // Constants
-  let colorScheme = useColorScheme();
+  const colorScheme = Appearance.getColorScheme();
   const [selectedTab, setSelectedTab] = useState("assets");
   const [ownedProperties, setOwnedProperties] = useState([]);
   const [assets, setAssets] = useState([]);

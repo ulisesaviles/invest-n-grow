@@ -1,7 +1,6 @@
 // React native imports
 import React, { useEffect } from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { useColorScheme } from "react-native-appearance";
+import { StyleSheet, Text, View, Appearance } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 // Local imports
@@ -14,7 +13,7 @@ import store from "../config/redux/store";
 
 export default Root = () => {
   const navigation = useNavigation();
-  let colorScheme = useColorScheme();
+  const colorScheme = Appearance.getColorScheme();
   const reset = async () => {
     await storeData("currentGame", defaultValues, true);
     await store.dispatch({

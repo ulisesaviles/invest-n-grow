@@ -7,8 +7,8 @@ import {
   Dimensions,
   Animated,
   Alert,
+  Appearance,
 } from "react-native";
-import { useColorScheme } from "react-native-appearance";
 
 // Redux
 import store from "../config/redux/store";
@@ -24,7 +24,7 @@ import properties from "../config/properties";
 
 export default ProgressIndicator = () => {
   // Constants
-  let colorScheme = useColorScheme();
+  const colorScheme = Appearance.getColorScheme();
   const [firstload, setFirtsLoad] = useState(true);
   const [limits, setLimits] = useState({
     lifeQuality: 100,

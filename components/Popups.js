@@ -7,8 +7,8 @@ import {
   Dimensions,
   TouchableOpacity,
   Animated,
+  Appearance,
 } from "react-native";
-import { useColorScheme } from "react-native-appearance";
 
 // Redux
 import store from "../config/redux/store";
@@ -26,7 +26,7 @@ import Store from "./Store";
 
 export default Popups = () => {
   // Constants
-  let colorScheme = useColorScheme();
+  const colorScheme = Appearance.getColorScheme();
   const [storeIsActive, setStoreIsActive] = useState(false);
   const [eventsIsActive, setEventsIsActive] = useState(false);
   const [firstLoad, setFirtsLoad] = useState(true);

@@ -8,8 +8,8 @@ import {
   Image,
   Dimensions,
   Animated,
+  Appearance,
 } from "react-native";
-import { useColorScheme } from "react-native-appearance";
 
 // Redux
 import store from "../config/redux/store";
@@ -26,7 +26,7 @@ import { LinearGradient } from "expo-linear-gradient";
 
 export default Properties = () => {
   // Constants
-  let colorScheme = useColorScheme();
+  const colorScheme = Appearance.getColorScheme();
   const [propertyIndex, setPropertyindex] = useState(0);
   const [hideProperty, setHideProperty] = useState(false);
   const [firstLoad, setFirtsLoad] = useState(true);
